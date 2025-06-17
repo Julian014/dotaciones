@@ -1,0 +1,72 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "com.google.gms.google-services"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+// 👇 CARGA DE LA FIRMA (antes de android { })
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file("key.properties")
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+def CERCETA_KEYSTORE = keystoreProperties['storeFile']
+def CERCETA_STORE_PASSWORD = keystoreProperties['storePassword']
+def CERCETA_KEY_ALIAS = keystoreProperties['keyAlias']
+def CERCETA_KEY_PASSWORD = keystoreProperties['keyPassword']
+
+
+
+
+
+android {
+    namespace 'app.cercetaresidencial'
+    compileSdkVersion 35
+
+    defaultConfig {
+    applicationId "com.cerceta.app" // ✅ CORRECTO
+        minSdkVersion 23
+        targetSdkVersion 35
+   versionCode 7
+    versionName "1.0.7"
+    }
+
+    // 👇 CONFIGURACIÓN DE FIRMA
+    signingConfigs {
+        release {
+        storeFile file("cerceta_key.jks") // ✅ ruta correcta si el archivo está en el mismo directorio
+            storePassword CERCETA_STORE_PASSWORD
+            keyAlias CERCETA_KEY_ALIAS
+            keyPassword CERCETA_KEY_PASSWORD
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            shrinkResources false
+        }
+    }
+
+    // 👇 Java toolchain para compilar con Java 17
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+}
+
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:33.0.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-messaging'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+}

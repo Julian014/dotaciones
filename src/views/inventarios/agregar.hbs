@@ -1,0 +1,222 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agregar Nuevo Producto al Inventario - Dotaciones Empresariales</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for images container */
+        .images-scroll::-webkit-scrollbar {
+            height: 8px;
+        }
+        .images-scroll::-webkit-scrollbar-thumb {
+            background-color: #a78bfa;
+            border-radius: 4px;
+        }
+        .images-scroll::-webkit-scrollbar-track {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-white to-indigo-50 min-h-screen flex flex-col">
+    <main class="flex-grow container mx-auto px-6 py-10 max-w-5xl">
+        <h1 class="text-4xl font-extrabold text-indigo-800 mb-10 text-center drop-shadow-md">Agregar Nuevo Producto al Inventario</h1>
+<form action="/agregar" method="POST" enctype="multipart/form-data" class="bg-white rounded-3xl shadow-2xl p-10 space-y-10" id="form-inventario">
+            <!-- Producto básico -->
+            <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <label for="nombre" class="block text-gray-800 font-semibold mb-3 text-lg">Nombre del Producto <span class="text-red-600">*</span></label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Ej. Casco de Seguridad" class="w-full border border-indigo-300 rounded-xl px-5 py-3 text-lg placeholder-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                </div>
+                <div>
+                    <label for="categoria" class="block text-gray-800 font-semibold mb-3 text-lg">Categoría <span class="text-red-600">*</span></label>
+                    <select id="categoria" name="categoria" required class="w-full border border-indigo-300 rounded-xl px-5 py-3 text-lg bg-white focus:outline-none focus:ring-4 focus:ring-indigo-400 transition">
+                        <option value="" disabled selected>Seleccione una categoría</option>
+                        <option value="ropa_trabajo">Ropa de Trabajo</option>
+                        <option value="calzado_seguridad">Calzado de Seguridad</option>
+                        <option value="proteccion_cabeza">Protección para Cabeza</option>
+                        <option value="proteccion_oidos">Protección para Oídos</option>
+                        <option value="proteccion_ojos">Protección para Ojos y Cara</option>
+                        <option value="guantes">Guantes</option>
+                        <option value="herramientas">Herramientas</option>
+                        <option value="equipos_seguridad">Equipos de Seguridad</option>
+                        <option value="botiquines">Botiquines y Primeros Auxilios</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="cantidad" class="block text-gray-800 font-semibold mb-3 text-lg">Cantidad Total <span class="text-red-600">*</span></label>
+                    <input type="number" id="cantidad" name="cantidad" min="1" required placeholder="Ej. 50" class="w-full border border-indigo-300 rounded-xl px-5 py-3 text-lg placeholder-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                </div>
+                <div>
+                    <label for="precio" class="block text-gray-800 font-semibold mb-3 text-lg">Precio Unitario Base (MXN) <span class="text-red-600">*</span></label>
+                    <input type="number" id="precio" name="precio" min="0" step="0.01" required placeholder="Ej. 299.99" class="w-full border border-indigo-300 rounded-xl px-5 py-3 text-lg placeholder-indigo-300 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                </div>
+                <div class="md:col-span-2">
+                    <label for="descripcion" class="block text-gray-800 font-semibold mb-3 text-lg">Descripción</label>
+                    <textarea id="descripcion" name="descripcion" rows="5" placeholder="Descripción detallada del producto" class="w-full border border-indigo-300 rounded-xl px-5 py-3 text-lg placeholder-indigo-300 resize-y focus:outline-none focus:ring-4 focus:ring-indigo-400 transition"></textarea>
+                </div>
+            </section>
+
+            <!-- Tallas, cantidades y precios -->
+            <section>
+                <h2 class="text-2xl font-bold text-indigo-700 mb-6 border-b-2 border-indigo-300 pb-2">Tallas, Cantidades y Precios Específicos</h2>
+                <div id="tallas-container" class="space-y-6">
+                    <div class="flex flex-col md:flex-row md:items-center md:space-x-6 space-y-4 md:space-y-0 border border-indigo-200 rounded-2xl p-6 shadow-sm bg-indigo-50 talla-item">
+                        <div class="flex-1">
+                            <label class="block text-indigo-800 font-semibold mb-2 text-lg" for="talla_0">Talla <span class="text-red-600">*</span></label>
+                            <input type="text" id="talla_0" name="tallas[0][nombre]" required placeholder="Ej. S, M, L, XL" class="w-full border border-indigo-300 rounded-xl px-4 py-2 text-lg placeholder-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-indigo-800 font-semibold mb-2 text-lg" for="cantidad_talla_0">Cantidad <span class="text-red-600">*</span></label>
+                            <input type="number" id="cantidad_talla_0" name="tallas[0][cantidad]" min="0" required placeholder="Ej. 10" class="w-full border border-indigo-300 rounded-xl px-4 py-2 text-lg placeholder-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                        </div>
+                        <div class="flex-1">
+                            <label class="block text-indigo-800 font-semibold mb-2 text-lg" for="precio_talla_0">Precio (MXN) <span class="text-red-600">*</span></label>
+                            <input type="number" id="precio_talla_0" name="tallas[0][precio]" min="0" step="0.01" required placeholder="Ej. 349.99" class="w-full border border-indigo-300 rounded-xl px-4 py-2 text-lg placeholder-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                        </div>
+                        <button type="button" class="self-end md:self-auto text-red-600 hover:text-red-800 transition text-2xl font-bold remove-talla-btn" aria-label="Eliminar talla">&times;</button>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="button" id="add-talla-btn" class="inline-flex items-center space-x-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg transition focus:outline-none focus:ring-4 focus:ring-indigo-400">
+                        <i class="fas fa-plus"></i><span>Agregar Talla</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Imágenes múltiples -->
+            <section>
+                <h2 class="text-2xl font-bold text-indigo-700 mb-6 border-b-2 border-indigo-300 pb-2">Imágenes del Producto</h2>
+                <p class="text-indigo-600 mb-4">Puedes subir varias imágenes para mostrar diferentes vistas o colores.</p>
+                <input type="file" id="imagenes" name="imagenes" accept="image/*" multiple class="w-full border border-indigo-300 rounded-xl px-4 py-3 text-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                <div id="preview-images" class="mt-6 flex flex-wrap gap-4 images-scroll max-h-48 overflow-x-auto"></div>
+            </section>
+
+            <div class="flex justify-end space-x-6 pt-6 border-t border-indigo-200">
+                <a href="/inventarios" class="px-8 py-3 border border-indigo-300 rounded-xl text-indigo-700 font-semibold hover:bg-indigo-100 transition">Cancelar</a>
+                <button type="submit" class="px-8 py-3 bg-indigo-700 text-white font-extrabold rounded-xl shadow-lg hover:bg-indigo-800 transition flex items-center space-x-3">
+                    <i class="fas fa-plus-circle fa-lg"></i><span>Agregar Producto</span>
+                </button>
+            </div>
+        </form>
+    </main>
+
+    <footer class="bg-white border-t border-indigo-200 py-8 mt-16">
+        <div class="container mx-auto px-6 text-center text-indigo-400 text-sm select-none">
+            &copy; 2024 InventarioApp. Todos los derechos reservados.
+        </div>
+    </footer>
+
+
+
+
+
+
+    <script>
+        // Mobile menu toggle
+    // Mobile menu toggle (opcional: eliminar si no se usa)
+const btn = document.getElementById('mobile-menu-button');
+const menu = document.getElementById('mobile-menu');
+if (btn && menu) {
+    btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+    });
+}
+
+
+        // Tallas dinámicas
+        const tallasContainer = document.getElementById('tallas-container');
+        const addTallaBtn = document.getElementById('add-talla-btn');
+
+        let tallaIndex = 1;
+
+        addTallaBtn.addEventListener('click', () => {
+            const div = document.createElement('div');
+            div.className = "flex flex-col md:flex-row md:items-center md:space-x-6 space-y-4 md:space-y-0 border border-indigo-200 rounded-2xl p-6 shadow-sm bg-indigo-50 talla-item";
+            div.innerHTML = `
+                <div class="flex-1">
+                    <label class="block text-indigo-800 font-semibold mb-2 text-lg" for="talla_${tallaIndex}">Talla <span class="text-red-600">*</span></label>
+                    <input type="text" id="talla_${tallaIndex}" name="tallas[${tallaIndex}][nombre]" required placeholder="Ej. S, M, L, XL" class="w-full border border-indigo-300 rounded-xl px-4 py-2 text-lg placeholder-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                </div>
+                <div class="flex-1">
+                    <label class="block text-indigo-800 font-semibold mb-2 text-lg" for="cantidad_talla_${tallaIndex}">Cantidad <span class="text-red-600">*</span></label>
+                    <input type="number" id="cantidad_talla_${tallaIndex}" name="tallas[${tallaIndex}][cantidad]" min="0" required placeholder="Ej. 10" class="w-full border border-indigo-300 rounded-xl px-4 py-2 text-lg placeholder-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                </div>
+                <div class="flex-1">
+                    <label class="block text-indigo-800 font-semibold mb-2 text-lg" for="precio_talla_${tallaIndex}">Precio (MXN) <span class="text-red-600">*</span></label>
+                    <input type="number" id="precio_talla_${tallaIndex}" name="tallas[${tallaIndex}][precio]" min="0" step="0.01" required placeholder="Ej. 349.99" class="w-full border border-indigo-300 rounded-xl px-4 py-2 text-lg placeholder-indigo-400 focus:outline-none focus:ring-4 focus:ring-indigo-400 transition" />
+                </div>
+                <button type="button" class="self-end md:self-auto text-red-600 hover:text-red-800 transition text-2xl font-bold remove-talla-btn" aria-label="Eliminar talla">&times;</button>
+            `;
+            tallasContainer.appendChild(div);
+            tallaIndex++;
+        });
+
+        // Delegated event listener for removing talla blocks
+        tallasContainer.addEventListener('click', e => {
+            if (e.target.classList.contains('remove-talla-btn')) {
+                const tallaDiv = e.target.closest('div.talla-item');
+                if (tallasContainer.children.length > 1) {
+                    tallaDiv.remove();
+                }
+            }
+        });
+
+        // Preview multiple images
+        const imagenesInput = document.getElementById('imagenes');
+        const previewContainer = document.getElementById('preview-images');
+
+        imagenesInput.addEventListener('change', () => {
+            previewContainer.innerHTML = '';
+            const files = imagenesInput.files;
+            if (files.length === 0) return;
+
+            Array.from(files).forEach((file, i) => {
+                if (!file.type.startsWith('image/')) return;
+
+                const reader = new FileReader();
+                reader.onload = e => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = `Vista previa de la imagen ${i + 1} del producto, mostrando detalles y colores`;
+                    img.className = "w-28 h-28 object-cover rounded-xl shadow-md border border-indigo-300";
+                    previewContainer.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+    </script>
+    <script>
+        // Convertir tallas a JSON antes de enviar el formulario
+document.getElementById('form-inventario').addEventListener('submit', function (e) {
+    const tallasFinal = [];
+    document.querySelectorAll('.talla-item').forEach((item, i) => {
+        const talla = item.querySelector(`[name="tallas[${i}][nombre]"]`)?.value;
+        const cantidad = item.querySelector(`[name="tallas[${i}][cantidad]"]`)?.value;
+        const precio = item.querySelector(`[name="tallas[${i}][precio]"]`)?.value;
+
+        tallasFinal.push({
+            nombre: talla,
+            cantidad: cantidad,
+            precio: precio
+        });
+    });
+
+    // Crear input hidden para enviar como string JSON
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'tallas';
+    input.value = JSON.stringify(tallasFinal);
+
+    this.appendChild(input);
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,681 @@
+<style>
+    /* Estilo general de la página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 2em;
+    color: #4a4a4a;
+    margin-bottom: 20px;
+}
+
+/* Estilo del formulario */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    font-weight: bold;
+    color: #333;
+}
+
+form input[type="text"],
+form select {
+    padding: 8px;
+    width: 200px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+form input[type="text"]:focus,
+form select:focus {
+    border-color: #90c9a7; /* Color de tu empresa */
+    outline: none;
+}
+
+form button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #1E99d3;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #76b08f;
+}
+
+/* Estilo de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table thead {
+    background-color: #1E99d3;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+table th, table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+table th {
+    font-size: 1em;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form input[type="text"],
+    form select {
+        width: 90%;
+    }
+
+    table {
+        font-size: 0.9em;
+    }
+
+    table th, table td {
+        padding: 8px 10px;
+    }
+}
+
+</style>
+<style>
+    /* Estilos para el modal */
+    #editModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        width: 400px;
+        position: relative;
+    }
+
+    .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+    .modal-content label {
+        font-weight: bold;
+    }
+
+    .modal-content input, .modal-content select {
+        width: 100%;
+        padding: 8px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+</style>
+
+<style>
+/* Fondo del modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Para evitar que el fondo de la página haga scroll */
+}
+
+/* Contenedor del modal */
+.modal-content {
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80%; /* Limita la altura del modal */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    overflow: hidden; /* Evita que el contenido salga del modal */
+}
+
+/* Cabecera del modal */
+.modal-content h2 {
+    margin: 0;
+    padding: 16px;
+    background-color: #1E99d3; /* Color de cabecera */
+    color: #ffffff;
+    font-size: 18px;
+}
+
+/* Botón de cierre */
+.close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+/* Cuerpo del modal con scroll */
+.modal-body {
+    padding: 16px;
+    overflow-y: auto; /* Habilita el scroll vertical */
+    flex: 1; /* Toma todo el espacio disponible dentro del modal */
+    max-height: calc(80vh - 100px); /* Ajusta la altura con respecto a la ventana */
+}
+
+/* Botón de guardar */
+.submit-button {
+    background-color: #1E99d3;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    margin: 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #76b08f; /* Color hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        max-height: 90%;
+    }
+
+    .submit-button {
+        width: 100%;
+    }
+}
+</style>
+
+<style>
+/* Fondo del modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    overflow: hidden; /* Evita scroll del fondo */
+}
+
+/* Contenedor del modal */
+.modal-content {
+    background-color: #ffffff;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80%; /* Limita la altura */
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    overflow: hidden; /* Evita que el contenido salga del modal */
+}
+
+/* Cabecera del modal */
+.modal-content h2 {
+    margin: 0;
+    padding: 16px;
+    background-color: #1E99d3; /* Color de cabecera */
+    color: #ffffff;
+    font-size: 18px;
+}
+
+/* Botón de cierre */
+.close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+/* Cuerpo del modal con scroll */
+.modal-body {
+    padding: 16px;
+    overflow-y: auto; /* Scroll vertical */
+    flex: 1; /* Expande para ocupar el espacio */
+}
+
+/* Pie del modal */
+.modal-footer {
+    display: flex;
+    justify-content: center; /* Centra el botón */
+    align-items: center;
+    padding: 16px;
+    background-color: #f9f9f9; /* Diferente del cuerpo */
+    border-top: 1px solid #ddd; /* Separador */
+}
+
+/* Botón de guardar */
+.submit-button {
+    background-color: #1E99d3;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+    background-color: #76b08f; /* Color hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 100%;
+        max-height: 90%;
+    }
+}
+
+.TODO{
+
+    color: black;
+}
+
+body.dark-mode h1 {
+  color: white; /* Cambia el color de los íconos a blanco en modo oscuro */
+}
+
+</style>
+
+
+
+
+<div class="TODO">
+
+
+
+
+<h1>Lista de Usuarios</h1>
+
+<!-- Formulario de Filtro -->
+<form id="filterForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" oninput="filterUsers()">
+
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" oninput="filterUsers()">
+
+    <label for="role">Role:</label>
+    <select id="role" name="role" onchange="filterUsers()">
+        <option value="">Seleccione un rol</option>
+        <option value="admin">Admin</option>
+        <option value="residentes">Residentes</option>
+    </select>
+</form>
+
+<!-- Tabla de Usuarios -->
+<!-- Tabla de Usuarios -->
+<table id="usuariosTable">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Cargo</th>
+            <th>Fecha de Cumpleaños</th>
+            <th>Edificio</th>
+            <th>Apartamento</th>
+             <th>Estado</th>
+                         <th>Foto</th>
+
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each usuarios}}
+        <tr>
+            <td>{{this.id}}</td>
+            <td>{{this.nombre}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.role}}</td>
+            <td>{{this.cargo}}</td>
+            <td>{{formatDate this.fecha_cumpleaños}}</td>
+            <td>{{this.edificio}}</td>
+            <td>{{this.apartamento}}</td>
+            <td>{{this.estado}}</td>
+     <td>
+                {{#if foto}}
+                <img src="data:image/jpeg;base64,{{foto}}" alt="Foto de {{nombre}}" style="width: 50px; height: 50px; object-fit: cover;">
+                {{else}}
+                Sin foto
+                {{/if}}
+            </td>
+ <td>
+<button onclick="openEditModal(
+    {{this.id}}, '{{this.nombre}}', '{{this.email}}', '{{this.role}}', 
+    '{{this.cargo}}', '{{this.fecha_cumpleaños}}', '{{this.edificio}}', 
+    '{{this.apartamento}}', '{{this.estado}}', '{{this.foto}}'
+)">Editar</button>
+        </td>
+    </tr>
+    {{/each}}
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Modal para editar usuario -->
+<div id="editModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span onclick="closeEditModal()" class="close">&times;</span>
+        <h2>Editar Usuario</h2>
+        <form id="editForm" onsubmit="submitEditForm(event)">
+            <div class="modal-body">
+                <input type="hidden" id="editId">
+
+
+
+
+<label>Foto actual:</label>
+<img id="currentFoto" src="" alt="Foto actual" style="width: 100px; height: 100px; object-fit: cover;">
+
+<label for="editFoto">Cambiar Foto:</label>
+<input type="file" id="editFoto" accept="image/*">
+
+
+                <label for="editNombre">Nombre:</label>
+                <input type="text" id="editNombre" required>
+
+                <label for="editEmail">Email:</label>
+                <input type="email" id="editEmail" required>
+
+                <label for="editRole">Role:</label>
+                <select id="editRole" required>
+                    <option value="admin">Admin</option>
+                    <option value="residentes">Residente</option>
+                </select>
+
+                <label for="editCargo">Cargo:</label>
+                <input type="text" id="editCargo">
+
+                <label for="editFechaCumpleaños">Fecha de Cumpleaños:</label>
+                <input type="date" id="editFechaCumpleaños">
+
+                <label for="editEdificio">Edificio:</label>
+                <select id="editEdificio" onchange="cargarApartamentos(this.value)">
+                    <option value="">Seleccione un edificio</option>
+                    {{#each edificios}}
+                    <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
+                </select>
+
+                <label for="editApartamento">Apartamento:</label>
+                <select id="editApartamento">
+                    <option value="">Seleccione un apartamento</option>
+                </select>
+
+                <label for="editEstado">Estado:</label>
+                <select id="editEstado" required>
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+                <button type="submit" class="submit-button">Guardar Cambios</button>
+            </div>
+            <!-- Botón centrado al final del modal -->
+        </form>
+    </div>
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+<script>
+    function filterUsers() {
+        const nombreFilter = document.getElementById('nombre').value.toLowerCase();
+        const emailFilter = document.getElementById('email').value.toLowerCase();
+        const roleFilter = document.getElementById('role').value;
+
+        const table = document.getElementById('usuariosTable').getElementsByTagName('tbody')[0];
+        const rows = table.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const nombre = rows[i].getElementsByTagName('td')[1].textContent.toLowerCase();
+            const email = rows[i].getElementsByTagName('td')[2].textContent.toLowerCase();
+            const role = rows[i].getElementsByTagName('td')[3].textContent;
+
+            // Condición de visibilidad de la fila
+            if (
+                (nombre.includes(nombreFilter) || nombreFilter === "") &&
+                (email.includes(emailFilter) || emailFilter === "") &&
+                (role === roleFilter || roleFilter === "")
+            ) {
+                rows[i].style.display = ""; // Mostrar la fila
+            } else {
+                rows[i].style.display = "none"; // Ocultar la fila
+            }
+        }
+    }
+</script>
+<script>
+
+
+
+async function openEditModal(id, nombre, email, role, cargo, fechaCumpleaños, edificio, apartamento, estado, foto) {
+    document.getElementById('editId').value = id;
+    document.getElementById('editNombre').value = nombre;
+    document.getElementById('editEmail').value = email;
+    document.getElementById('editRole').value = role;
+    document.getElementById('editCargo').value = cargo;
+
+    const date = new Date(fechaCumpleaños);
+    document.getElementById('editFechaCumpleaños').value = !isNaN(date.getTime()) 
+        ? date.toISOString().split('T')[0] 
+        : '';
+
+    document.getElementById('editEdificio').value = edificio;
+    document.getElementById('editApartamento').value = apartamento;
+    document.getElementById('editEstado').value = estado;
+
+    const fotoElement = document.getElementById('currentFoto');
+    if (foto) {
+        // Convertir base64 directamente para mostrarla en la vista
+        fotoElement.src = `data:image/jpeg;base64,${foto}`;
+    } else {
+        fotoElement.src = '';
+        fotoElement.alt = 'Sin foto';
+    }
+
+    document.getElementById('editModal').style.display = 'flex';
+}
+
+
+
+document.getElementById('editFoto').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const fotoElement = document.getElementById('currentFoto');
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            fotoElement.src = e.target.result; // Previsualizar la foto
+            fotoElement.alt = 'Foto seleccionada';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+
+async function submitEditForm(event) {
+    event.preventDefault();
+
+    const id = document.getElementById('editId').value;
+    const nombre = document.getElementById('editNombre').value;
+    const email = document.getElementById('editEmail').value;
+    const role = document.getElementById('editRole').value;
+    const cargo = document.getElementById('editCargo').value;
+    const fechaCumpleaños = document.getElementById('editFechaCumpleaños').value;
+    const edificio = document.getElementById('editEdificio').value;
+    const apartamento = document.getElementById('editApartamento').value;
+    const estado = document.getElementById('editEstado').value;
+
+    const fotoInput = document.getElementById('editFoto').files[0];
+
+    const formData = new FormData();
+    formData.append('id', id);
+    formData.append('nombre', nombre);
+    formData.append('email', email);
+    formData.append('role', role);
+    formData.append('cargo', cargo);
+    formData.append('fechaCumpleaños', fechaCumpleaños);
+    formData.append('edificio', edificio);
+    formData.append('apartamento', apartamento);
+    formData.append('estado', estado);
+    if (fotoInput) {
+        formData.append('foto', fotoInput);
+    }
+
+    try {
+        const response = await fetch(`/editar_usuario/${id}`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (response.ok) {
+            alert('Usuario actualizado correctamente');
+            closeEditModal();
+            location.reload();
+        } else {
+            alert('Error al actualizar el usuario');
+        }
+    } catch (error) {
+        console.error('Error al enviar datos de edición:', error);
+    }
+}
+
+
+
+
+
+    function cargarApartamentos(edificioId) {
+    const apartamentoSelect = document.getElementById('editApartamento');
+    apartamentoSelect.innerHTML = '<option value="">Seleccione un apartamento</option>';
+
+    if (edificioId) {
+        fetch(`/obtener_apartamentos_usuarios/${edificioId}`)
+            .then(response => response.json())
+            .then(apartamentos => {
+                apartamentos.forEach(apartamento => {
+                    const option = document.createElement('option');
+                    option.value = apartamento.id;
+                    option.text = apartamento.numero;
+                    apartamentoSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error al obtener apartamentos:', error));
+    }
+}
+
+</script>
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+  function closeEditModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+</script>

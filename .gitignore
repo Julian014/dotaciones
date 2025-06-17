@@ -1,0 +1,7 @@
+/node_modules
+android/key.properties
+src/firebase/serviceAccountKey.json
+/src/config/serviceAccountKey.json
+src/config/serviceAccountKey.json
+.env
+

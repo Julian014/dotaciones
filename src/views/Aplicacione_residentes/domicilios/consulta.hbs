@@ -1,0 +1,244 @@
+<style>
+  /* Estilo minimalista y compacto */
+  body {
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 15px;
+    background: #f9f9f9;
+    color: #333;
+    line-height: 1.4;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  /* Botones compactos */
+  .tab-buttons {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 15px;
+  }
+
+  .tab-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background: #e0e0e0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+  }
+
+  .tab-btn:hover {
+    background: #d0d0d0;
+  }
+
+  .tab-btn.active {
+    background: #4a6bff;
+    color: white;
+  }
+
+  /* Lista de domicilios ultracompacta */
+  .domicilio-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .domicilio-item {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 12px;
+    margin-bottom: 10px;
+  }
+
+  .domicilio-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+  }
+
+  .domicilio-status {
+    font-weight: bold;
+    font-size: 0.8rem;
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+
+  .status-pendiente {
+    background: #fff3cd;
+    color: #856404;
+  }
+
+  .status-completado {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  .domicilio-obs {
+    font-size: 0.9rem;
+    margin: 5px 0;
+  }
+
+  .domicilio-img {
+    margin-top: 8px;
+    max-width: 150px;
+    border-radius: 3px;
+    border: 1px solid #eee;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 20px;
+    color: #777;
+    font-size: 0.9rem;
+  }
+  .recibido-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.recibido-btn:hover {
+  background: #43a047;
+}
+
+</style>
+
+<h2>📦 Mis Domicilios</h2>
+
+<!-- Pestañas compactas -->
+<div class="tab-buttons">
+  <button class="tab-btn active" onclick="mostrar('pendientes')">Pendientes ({{pendientes.length}})</button>
+  <button class="tab-btn" onclick="mostrar('completados')">Completados ({{completados.length}})</button>
+</div>
+
+<!-- Lista de Pendientes -->
+<div id="pendientes">
+  {{#if pendientes.length}}
+    <ul class="domicilio-list">
+{{#each pendientes}}
+<li class="domicilio-item" data-id="{{this.id}}">
+    <div class="domicilio-header">
+      <span>📅 {{this.created_at}}</span>
+      <span class="domicilio-status status-pendiente">Pendiente</span>
+    </div>
+    <p class="domicilio-obs"><strong>📝:</strong> {{this.observaciones}}</p>
+    {{#if this.foto}}
+      <img src="data:image/jpeg;base64,{{this.foto}}" class="domicilio-img">
+    {{/if}}
+
+    <!-- Botón para marcar como recibido -->
+    <button class="recibido-btn" onclick="marcarRecibido('{{this.id}}')">✅ Recibí mi domicilio</button>
+  </li>
+{{/each}}
+
+    </ul>
+  {{else}}
+    <div class="empty-state">No hay domicilios pendientes</div>
+  {{/if}}
+</div>
+
+<!-- Lista de Completados -->
+<div id="completados" style="display:none">
+  {{#if completados.length}}
+    <ul class="domicilio-list">
+      {{#each completados}}
+<li class="domicilio-item" data-id="{{this.id}}">
+          <div class="domicilio-header">
+            <span>📅 {{this.created_at}}</span>
+            <span class="domicilio-status status-completado">Completado</span>
+          </div>
+          <p class="domicilio-obs"><strong>📝:</strong> {{this.observaciones}}</p>
+          {{#if this.foto}}
+            <img src="data:image/jpeg;base64,{{this.foto}}" class="domicilio-img">
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <div class="empty-state">No hay domicilios completados</div>
+  {{/if}}
+</div>
+<script>
+function mostrar(tab) {
+  const tabs = ['pendientes', 'completados'];
+
+  tabs.forEach(t => {
+    document.getElementById(t).style.display = (t === tab) ? 'block' : 'none';
+    const btn = document.querySelector(`.tab-btn[onclick="mostrar('${t}')"]`);
+    if (btn) btn.classList.toggle('active', t === tab);
+  });
+}
+</script>
+
+<script>
+function marcarRecibido(id) {
+  if (!confirm("¿Estás seguro de que recibiste tu domicilio?")) return;
+
+  fetch(`/marcar-recibido/${id}`, {
+    method: 'POST'
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      // Mover el domicilio al contenedor de completados
+      const item = document.querySelector(`.domicilio-item[data-id="${id}"]`);
+      if (!item) return;
+
+      // Actualizar clase y texto de estado
+      const status = item.querySelector('.domicilio-status');
+      status.classList.remove('status-pendiente');
+      status.classList.add('status-completado');
+      status.textContent = 'Completado';
+
+      // Quitar botón
+      const btn = item.querySelector('.recibido-btn');
+      if (btn) btn.remove();
+
+      // Mover el elemento al contenedor de completados
+      const completadosList = document.querySelector('#completados .domicilio-list');
+      if (completadosList) {
+        completadosList.appendChild(item);
+      }
+
+      // Verifica si ya no quedan pendientes
+      const pendientesList = document.querySelector('#pendientes .domicilio-list');
+      if (pendientesList.children.length === 0) {
+        pendientesList.insertAdjacentHTML('beforeend', '<div class="empty-state">No hay domicilios pendientes</div>');
+      }
+    } else {
+      alert("No se pudo marcar como recibido.");
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Error de red al marcar como recibido.");
+  });
+}
+</script>
+
+<script>
+  document.querySelectorAll('.domicilio-header span:first-child').forEach(el => {
+    const rawDate = el.textContent.trim().replace('📅 ', '');
+    const date = new Date(rawDate);
+    if (!isNaN(date)) {
+      const options = { day: '2-digit', month: 'short', year: 'numeric' };
+      el.textContent = '📅 ' + date.toLocaleDateString('es-CO', options);
+    }
+  });
+</script>

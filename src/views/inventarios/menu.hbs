@@ -1,0 +1,56 @@
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menú de Inventarios</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-indigo-50 via-white to-indigo-50 min-h-screen flex items-center justify-center p-6">
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-8">
+    <h1 class="text-3xl font-extrabold text-indigo-700 mb-10 text-center tracking-wide">Menú de Inventarios</h1>
+    <nav class="space-y-6">
+      <a href="/ver_inventario" class="group flex items-center p-5 bg-indigo-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="flex-shrink-0 w-12 h-12 bg-indigo-600 text-white rounded-lg flex items-center justify-center text-xl group-hover:bg-indigo-700 transition-colors duration-300">
+          <i class="fas fa-boxes"></i>
+        </div>
+        <span class="ml-5 text-indigo-700 font-semibold text-lg group-hover:text-indigo-900 transition-colors duration-300">Ver Inventario Completo</span>
+      </a>
+
+      <a href="/Agregar_nuevo" class="group flex items-center p-5 bg-green-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="flex-shrink-0 w-12 h-12 bg-green-600 text-white rounded-lg flex items-center justify-center text-xl group-hover:bg-green-700 transition-colors duration-300">
+          <i class="fas fa-plus-circle"></i>
+        </div>
+        <span class="ml-5 text-green-700 font-semibold text-lg group-hover:text-green-900 transition-colors duration-300">Agregar Nuevo Producto</span>
+      </a>
+
+      <a href="/inventario/ajustes" class="group flex items-center p-5 bg-yellow-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="flex-shrink-0 w-12 h-12 bg-yellow-500 text-white rounded-lg flex items-center justify-center text-xl group-hover:bg-yellow-600 transition-colors duration-300">
+          <i class="fas fa-exchange-alt"></i>
+        </div>
+        <span class="ml-5 text-yellow-700 font-semibold text-lg group-hover:text-yellow-900 transition-colors duration-300">Ajustes de Stock</span>
+      </a>
+
+      <a href="/inventario/reportes" class="group flex items-center p-5 bg-pink-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="flex-shrink-0 w-12 h-12 bg-pink-600 text-white rounded-lg flex items-center justify-center text-xl group-hover:bg-pink-700 transition-colors duration-300">
+          <i class="fas fa-chart-bar"></i>
+        </div>
+        <span class="ml-5 text-pink-700 font-semibold text-lg group-hover:text-pink-900 transition-colors duration-300">Reportes de Inventario</span>
+      </a>
+
+      <a href="/inventario/categorias" class="group flex items-center p-5 bg-purple-50 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div class="flex-shrink-0 w-12 h-12 bg-purple-600 text-white rounded-lg flex items-center justify-center text-xl group-hover:bg-purple-700 transition-colors duration-300">
+          <i class="fas fa-tags"></i>
+        </div>
+        <span class="ml-5 text-purple-700 font-semibold text-lg group-hover:text-purple-900 transition-colors duration-300">Gestionar Categorías</span>
+      </a>
+    </nav>
+  </div>
+</body>
+</html>

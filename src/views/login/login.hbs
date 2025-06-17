@@ -1,0 +1,663 @@
+<html><head><base href="./"><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name="description" content="Magiis"><meta name="author" content="Magiis"><meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,AngularJS,Angular,Angular2,jQuery,CSS,HTML,RWD,Dashboard,Vue,Vue.js,React,React.js"><link rel="shortcut icon" href="assets/img/logos/MAGiis-ISO-fondo-transparente.png"><script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script><script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcQeM1pOjId32zqL2zWiPXIwTbAPg1nLs&amp;libraries=places" type="text/javascript"></script>
+
+
+
+<link rel="manifest" href="/manifest.json"><title>MAGIIS</title><link href="styles.80ca79da6855eaf874b4.bundle.css" rel="stylesheet"><style></style><script type="text/javascript" src="assets/mercadopago/V2.js"></script><script type="text/javascript" charset="utf-8" async="" src="5.ddf2c46e5c216c4fcfa5.chunk.js"></script><style>[_nghost-c1] {
+    z-index: 999999;
+    pointer-events: none;
+    position: relative;
+  }</style><style>.ng-progress[_ngcontent-c2] {
+    z-index: 999999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: fixed;
+    zoom: 1;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    transition: opacity 200ms linear;
+  }
+
+  .active[_ngcontent-c2] {
+    filter: alpha(opacity=100);
+    opacity: 1;
+    transition: none;
+  }
+
+  .bar[_ngcontent-c2] {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+  }
+
+  .thick[_ngcontent-c2]   .bar[_ngcontent-c2] {
+    height: 3px;
+  }
+
+  .bar-shadow[_ngcontent-c2] {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 100px;
+    height: 100%;
+    opacity: 1.0;
+    -webkit-transform: rotate(3deg);
+    -ms-transform: rotate(3deg);
+    -moz-transform: rotate(3deg);
+    transform: rotate(3deg);
+  }
+
+
+  .thick[_ngcontent-c2]   .bar-shadow[_ngcontent-c2] {
+    top: -4px;
+    -webkit-transform: rotate(4deg);
+    -ms-transform: rotate(4deg);
+    -moz-transform: rotate(4deg);
+    transform: rotate(4deg);
+  }
+
+  .thick[_ngcontent-c2]   .spinner-icon[_ngcontent-c2] {
+    width: 24px;
+    height: 24px;
+    border: solid 3px transparent;
+  }
+
+  
+  .spinner[_ngcontent-c2] {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    top: 15px;
+    right: 15px;
+  }
+
+  .spinner-icon[_ngcontent-c2] {
+    width: 18px;
+    height: 18px;
+    box-sizing: border-box;
+
+    border: solid 2px transparent;
+    border-radius: 50%;
+
+    -webkit-animation: nprogress-spinner 400ms linear infinite;
+    -moz-animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
+  }
+
+  .anti-clockwise[_ngcontent-c2]   .spinner-icon[_ngcontent-c2] {
+    -webkit-animation-direction: reverse;
+    -moz-animation-direction: rotate(0deg);
+    animation-direction: reverse;
+  }
+
+  @-webkit-keyframes nprogress-spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes nprogress-spinner {
+    0% {
+      -webkit-transform: rotate(0deg);
+      -moz-transform: rotate(0deg);
+      transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+      -moz-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }</style><style>.background[_ngcontent-c3]{background:Url("./assets/img/login-fondo.jpg")!important;background-size:cover!important;background-repeat:no-repeat;width:100%;min-height:100vh}.container-card[_ngcontent-c3]{height:calc(100vh - 3rem);width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.card-login[_ngcontent-c3]{background-color:rgba(84,179,165,.9);border-color:transparent;border-radius:14px;width:700px;max-width:90%;color:#fff;margin:0}.card-header[_ngcontent-c3]{background:transparent;padding:1rem 0;text-align:center;border-bottom:1px solid hsla(0,0%,100%,.3)}.card-header[_ngcontent-c3]   h1[_ngcontent-c3]{color:#fff;font-size:2rem}.card-body[_ngcontent-c3]{padding:3rem 0}.card-body[_ngcontent-c3]   form[_ngcontent-c3]{display:-webkit-box;display:-ms-flexbox;display:flex;width:100%}.container-password[_ngcontent-c3]{text-align:right}.link-recovery-password-login[_ngcontent-c3]{font-size:.8rem;color:#fff;margin-bottom:1rem}.link-recovery-password-login[_ngcontent-c3]:hover{text-decoration:none;color:#a43883}.center-avatar-login[_ngcontent-c3]{width:154px;margin-right:32px}.img-avatar[_ngcontent-c3]{width:154px;height:154px;background-position:50% 50%;background-repeat:no-repeat;background-size:cover;position:relative}.group-inputs[_ngcontent-c3]{width:calc(100% - 186px)}.input-group[_ngcontent-c3]{margin-bottom:1rem;position:relative}.input-login[_ngcontent-c3]{background:transparent;border:2px solid #fff;color:#000!important;font-size:1.1rem;padding:.8rem 1rem .8rem 2.2rem!important;border-radius:30px!important}.group-inputs[_ngcontent-c3]   .input-login[_ngcontent-c3]::-webkit-input-placeholder{color:#fff;opacity:1}.group-inputs[_ngcontent-c3]   .input-login[_ngcontent-c3]:-ms-input-placeholder{color:#fff;opacity:1}.group-inputs[_ngcontent-c3]   .input-login[_ngcontent-c3]::-ms-input-placeholder{opacity:1}.group-inputs[_ngcontent-c3]   .input-login[_ngcontent-c3]::placeholder{color:#fff;opacity:1}.group-inputs[_ngcontent-c3]   .input-login[_ngcontent-c3]::-ms-input-placeholder{color:#fff}.group-inputs[_ngcontent-c3]   .input-group[_ngcontent-c3]   i[_ngcontent-c3]{color:#606060;position:absolute;top:50%;left:.8rem;margin-top:-.5rem;z-index:99;font-size:1.1rem}.input-login[_ngcontent-c3]:focus   i[_ngcontent-c3]{color:#54b2a5}.input-login[_ngcontent-c3]:focus{background:hsla(0,0%,100%,.3)}.btn-register[_ngcontent-c3]{border-radius:30px;background-color:transparent;border:1px solid #fff;color:#fff}.btn-register[_ngcontent-c3]:focus, .btn-register[_ngcontent-c3]:hover{background:hsla(0,0%,100%,.1)}.card-footer[_ngcontent-c3]{padding:2rem 0 0;background:transparent;border-top:1px solid hsla(0,0%,100%,.3)}.card-footer[_ngcontent-c3]   img[_ngcontent-c3]{max-width:200px}.bg-empresa[_ngcontent-c3]{background:Url("imagenes/logo pestaña.PNG") no-repeat 50%!important;background-size:cover!important}.bg-carrier[_ngcontent-c3]{background:Url("imagenes/bg-login-carrier.png") no-repeat 50%!important;background-size:cover!important}.background-login[_ngcontent-c3]{width:100%;min-height:100vh}.background-login[_ngcontent-c3]   .content-login[_ngcontent-c3]{width:100%;height:calc(100vh - 110px);display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]{width:1210px;max-width:90%;height:600px;display:-webkit-box;display:-ms-flexbox;display:flex}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]{height:100%;width:45%;background:rgba(84,179,165,.95);color:#fff;padding:40px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   img[_ngcontent-c3]{max-width:366px;opacity:.95}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   h1[_ngcontent-c3]{color:#fff;font-size:52px;margin-top:25px}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   p[_ngcontent-c3]{font-size:22px;line-height:1.8;font-family:montserratregular}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .bg-empresa[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   p[_ngcontent-c3]{max-width:300px}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]{height:100%;width:55%;background:hsla(0,0%,100%,.95);padding:40px}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-logo-card[_ngcontent-c3]{text-align:center;width:100%;margin-bottom:2rem}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-logo-card[_ngcontent-c3]   img[_ngcontent-c3]{width:166px}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-logo-card[_ngcontent-c3]   h5[_ngcontent-c3]{color:#888;margin-top:.5rem}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .input-group[_ngcontent-c3]{margin-bottom:1rem;position:relative}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .input-group[_ngcontent-c3]   input[_ngcontent-c3]{background:#fff;border:2px solid #fff;color:#fff;font-size:1.1rem;padding:.8rem 1rem .8rem 2.2rem!important;border-radius:30px!important}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .form-login[_ngcontent-c3]{margin-top:2rem}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .form-login[_ngcontent-c3]   .input-group[_ngcontent-c3]   i[_ngcontent-c3]{color:#606060;position:absolute;top:50%;left:.8rem;margin-top:-.5rem;z-index:99;font-size:1.1rem}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-forgotpass[_ngcontent-c3]{text-align:right}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-forgotpass[_ngcontent-c3]   .btn-link[_ngcontent-c3]{color:#999;font-size:13px;text-decoration:underline}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-forgotpass[_ngcontent-c3]   .btn-link[_ngcontent-c3]:focus, .background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-forgotpass[_ngcontent-c3]   .btn-link[_ngcontent-c3]:hover{color:#a63984}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-btn-login[_ngcontent-c3]{text-align:center;margin-top:1rem}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .container-btn-login[_ngcontent-c3]   .ingresar[_ngcontent-c3]{margin:0 auto;width:200px}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .registrarse[_ngcontent-c3]{color:#999;font-size:14px;margin-top:3rem;padding-top:2rem;border-top:1px solid #ccc;font-family:montserratregular;text-align:center;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .registrarse[_ngcontent-c3]   .btn-link[_ngcontent-c3]{padding:0;color:#a63984;display:inline-block;margin-left:.4rem}.header-login[_ngcontent-c3]{background:#fff;width:100%;height:70px;padding:0 60px;display:-webkit-box;display:-ms-flexbox;-webkit-box-align:center;-ms-flex-align:center;align-items:center;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.header-login[_ngcontent-c3]   img[_ngcontent-c3]{height:35px}.footer[_ngcontent-c3]{position:absolute;right:0;bottom:0;left:0;padding:.5rem 1rem;background-color:#efefef;text-align:left;opacity:.7}.footer[_ngcontent-c3]   p[_ngcontent-c3]{margin:0;line-height:1.2}.footer[_ngcontent-c3]   .footer-version[_ngcontent-c3]{text-align:right}.version[_ngcontent-c3]{color:#54b3a5;text-decoration:underline;font-family:montserratbold}@media (max-width:1044px){.card-login-left[_ngcontent-c3]   h1[_ngcontent-c3]{font-size:40px!important}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   p[_ngcontent-c3]{font-size:18px}}@media (max-width:800px){.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]{height:auto;display:block}.card-login-left[_ngcontent-c3], .card-login-right[_ngcontent-c3]{width:100%!important;height:auto!important}.card-login-left[_ngcontent-c3]{display:-webkit-box;display:-ms-flexbox;display:flex;padding:25px 40px!important}.card-login-left[_ngcontent-c3]   img[_ngcontent-c3]{max-width:200px!important;margin-right:2rem}.content-login[_ngcontent-c3]{display:block;margin:15px 0 45px;height:auto!important}}@media (max-height:730px){.content-login[_ngcontent-c3]{display:block;margin:15px 0 45px;height:auto!important}}@media (max-width:630px){.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .registrarse[_ngcontent-c3]{display:block}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-right[_ngcontent-c3]   .registrarse[_ngcontent-c3]   .btn-link[_ngcontent-c3]{display:block;text-align:center;margin:0 auto}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   h1[_ngcontent-c3]{font-size:35px!important}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]{display:block}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   img[_ngcontent-c3]{display:none}.background-login[_ngcontent-c3]   .container-card-login[_ngcontent-c3]   .card-login-left[_ngcontent-c3]   p[_ngcontent-c3]{max-width:100%;font-size:16px!important}}@media (max-width:480px){.card-login-left[_ngcontent-c3]   h1[_ngcontent-c3]{font-size:30px!important}.card-login-left[_ngcontent-c3], .card-login-right[_ngcontent-c3]{padding:25px 30px!important}}@media (max-height:780px),(max-width:768px){.container-card[_ngcontent-c3]{display:block;height:100%}.background[_ngcontent-c3]{height:auto;min-height:100vh}.container-card[_ngcontent-c3]{padding:1rem 0}.card-login[_ngcontent-c3]{margin:0 auto}.card-header[_ngcontent-c3]   h1[_ngcontent-c3]{font-size:28px}.card-body[_ngcontent-c3]{padding:1rem 0 2rem}.card-body[_ngcontent-c3]   form[_ngcontent-c3]{display:block}.center-avatar-login[_ngcontent-c3]{margin:0 0 1rem;text-align:center;width:100%}.img-avatar[_ngcontent-c3]{width:120px;height:120px}.group-inputs[_ngcontent-c3]{width:100%}.input-login[_ngcontent-c3]{font-size:inherit}.footer[_ngcontent-c3]{position:inherit}.input-login[_ngcontent-c3]{font-size:.8rem}.card-footer[_ngcontent-c3]   img[_ngcontent-c3]{max-width:150px}.footer-version[_ngcontent-c3]{margin-top:.5rem;text-align:left}}</style><style>.lang-menu[_ngcontent-c4]{font-family:montserratregular;color:#333!important;border-radius:1.2rem!important;font-size:1rem;height:36px!important;border:1px solid #ddd!important;outline:none}.lang-menu[_ngcontent-c4]   a[_ngcontent-c4]{color:#333}.lang-menu[_ngcontent-c4]   .nav-link[_ngcontent-c4]{height:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;border-radius:1.2rem}.lang-menu[_ngcontent-c4]   .nav-link[_ngcontent-c4]:active, .lang-menu[_ngcontent-c4]   .nav-link[_ngcontent-c4]:focus, .lang-menu[_ngcontent-c4]   .nav-link[_ngcontent-c4]:hover{background:#eee}.lang-menu[_ngcontent-c4]   .dropdown-menu[_ngcontent-c4]{min-width:80px}.lang-menu[_ngcontent-c4]   .dropdown-item[_ngcontent-c4]{min-width:78px;padding:.7rem 1rem;cursor:pointer;border-top:1px solid #ddd}.app-header.navbar[_ngcontent-c4]   .dropdown-menu[_ngcontent-c4]{padding-top:0;-webkit-box-shadow:1px 1px 16px 0 rgba(0,0,0,.2);box-shadow:1px 1px 16px 0 rgba(0,0,0,.2)}.app-header.navbar[_ngcontent-c4]   .dropdown-menu[_ngcontent-c4]   a[_ngcontent-c4]{padding:.7rem 1rem;cursor:pointer;border-top:1px solid #ddd}.app-header.navbar[_ngcontent-c4]   .dropdown-menu[_ngcontent-c4]   a[_ngcontent-c4]:focus, .app-header.navbar[_ngcontent-c4]   .dropdown-menu[_ngcontent-c4]   a[_ngcontent-c4]:hover{background:#ededed;color:#666}.app-header.navbar[_ngcontent-c4]   .dropdown-menu[_ngcontent-c4]   a[_ngcontent-c4]:active{background:#ccc;color:#666}.dropdown-header-profile[_ngcontent-c4]{left:auto!important;right:0!important}.dropdown-item[_ngcontent-c4]   i[_ngcontent-c4]{color:#666;margin-left:0;margin-right:.4rem}.app-header.navbar[_ngcontent-c4]   .nav-link[_ngcontent-c4]   i[_ngcontent-c4]{color:#bbb}.dropdown-menu[_ngcontent-c4]{padding-top:0;-webkit-box-shadow:1px 1px 16px 0 rgba(0,0,0,.2);box-shadow:1px 1px 16px 0 rgba(0,0,0,.2)}</style><style type="text/css">
+// v4 font rules
+// cyrillic-ext
+@font-face {
+	font-family: 'Atlassian Sans Ext';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/AtlassianSans-cyrillic-ext.woff2') format('woff2');
+	unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+// cyrillic
+@font-face {
+	font-family: 'Atlassian Sans Ext';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/AtlassianSans-cyrillic.woff2') format('woff2');
+	unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+// vietnamese
+@font-face {
+	font-family: 'Atlassian Sans Ext';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/AtlassianSans-vietnamese.woff2') format('woff2');
+	unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0,
+		U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+
+// latin
+@font-face {
+	font-family: 'Atlassian Sans Ext';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/AtlassianSans-latin.woff2') format('woff2');
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304,
+		U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+// latin-ext
+@font-face {
+	font-family: 'Atlassian Sans Ext';
+	font-style: normal;
+	font-weight: 100 900;
+	font-display: swap;
+	src: url('chrome-extension://liecbddmkiiihnedobmlmillhodjkdmb/fonts/AtlassianSans-latin-ext.woff2') format('woff2');
+	unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308,
+		U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+		U+2C60-2C7F, U+A720-A7FF;
+}
+
+
+
+
+
+.ingresar {
+  background: linear-gradient(45deg, #2eb6a4, #29a59b);
+  border: none;
+  border-radius: 50px;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: all 0.3s ease-in-out;
+}
+
+.ingresar:hover {
+  background: linear-gradient(45deg, #25a095, #1d8e87);
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+  cursor: pointer; /* 👉 Hace que aparezca el puntero */
+}
+
+.ingresar:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(84, 179, 165, 0.4);
+}
+
+@media (min-width: 1440px) {
+  .ingresar {
+    font-size: 1.4rem;
+    padding: 1rem 3rem;
+  }
+}
+
+
+
+
+
+.registrarse {
+  color: #555;
+  font-size: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #ccc;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.registrarse .btn-link {
+  padding: 0.3rem 1rem;
+  font-weight: bold;
+  color: #a63984;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: all 0.3s ease-in-out;
+  border: 1px solid transparent;
+}
+
+.registrarse .btn-link:hover {
+  background-color: rgba(166, 57, 132, 0.1);
+  color: #7e2761;
+  border: 1px solid #a63984;
+  cursor: pointer;
+}
+
+@media (min-width: 1440px) {
+  .registrarse {
+    font-size: 1.2rem;
+  }
+
+  .registrarse .btn-link {
+    font-size: 1.1rem;
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+
+.container-forgotpass {
+  text-align: right;
+  margin-top: 0.8rem;
+}
+
+.container-forgotpass .btn-link {
+  background-color: transparent;
+  color: #a63984;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 20px;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.container-forgotpass .btn-link:hover {
+  background-color: rgba(166, 57, 132, 0.15);
+  border: 1px solid #a63984;
+  color: #7e2761;
+  cursor: pointer;
+}
+
+@media (min-width: 1440px) {
+  .container-forgotpass .btn-link {
+    font-size: 1.05rem;
+    padding: 0.5rem 1.2rem;
+  }
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #fff; /* o el color de fondo que estés usando */
+}
+.access-icons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.access-icons a {
+  color: #54b3a5;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.access-icons a:hover {
+  transform: scale(1.1);
+  color: #2c8f81;
+}
+
+
+</style>
+
+
+
+
+
+
+
+<script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/61/3b/intl/es_ALL/common.js"></script><script type="text/javascript" charset="UTF-8" src="https://maps.googleapis.com/maps-api-v3/api/js/61/3b/intl/es_ALL/util.js"></script></head>
+
+
+
+<body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden" ng-version="5.2.1">
+    <router-outlet>
+      <app-spinner name="mySpinner" _nghost-c0=""><!---->
+</app-spinner>
+    </router-outlet><app-layout class="ng-star-inserted">
+    <ng-progress _nghost-c1="">
+  <ng-progress-bar _ngcontent-c1="" _nghost-c2="">
+  <!----><div _ngcontent-c2="" class="ng-progress thick ng-star-inserted">
+    <div _ngcontent-c2="" class="bar" style="transition: 200ms linear; background-color: rgb(204, 24, 30); margin-left: -100%;">
+      <div _ngcontent-c2="" class="bar-shadow" style="box-shadow: rgb(204, 24, 30) 0px 0px 10px, rgb(204, 24, 30) 0px 0px 5px;"></div>
+    </div>
+    <!---->
+  </div></ng-progress-bar></ng-progress>
+    <router-outlet></router-outlet><login-carrier _nghost-c3="" class="ng-star-inserted"><div _ngcontent-c3="" class="background-login bg-carrier">
+
+  
+<header _ngcontent-c3="" class="header-login">
+  <img _ngcontent-c3="" alt="Magiis" src="https://cercetadotaciones.com.co/wp-content/uploads/2023/02/2022cercetafinal-HORIZONTAL-NEGRO_Mesa-de-trabajo-1.png">
+
+  
+</header>
+
+  <div _ngcontent-c3="" class="content-login">
+
+    
+    <div _ngcontent-c3="" class="container-card-login">
+
+      
+      <div _ngcontent-c3="" class="card-login-left">
+        <img _ngcontent-c3="" src="imagenes/dotaciones.png">
+        <div _ngcontent-c3="">
+          <h1 _ngcontent-c3="">Cerceta dotaciones</h1>
+          <p _ngcontent-c3="">Somos una empresa de turismo y transporte especial terrestre, que trabaja para garantizar la seguridad de cada pasajero.
+Vianco te transporta a un mundo lleno de experiencias</p>
+        </div>
+      </div>
+
+      
+      <div _ngcontent-c3="" class="card-login-right">
+        <div _ngcontent-c3="" class="container-logo-card">
+          <img _ngcontent-c3="" alt="Magiis" src="imagenes/apk192.png">
+          <h5 _ngcontent-c3=""></h5>
+        </div>
+
+        <h3 _ngcontent-c3="">Iniciar sesion</h3>
+
+       <form action="/login" method="POST" class="form-login ng-untouched ng-pristine ng-valid" novalidate="">
+
+          
+            <div _ngcontent-c3="" class="input-group">
+              <i _ngcontent-c3="" aria-hidden="true" class="fa fa-user"></i>
+
+
+
+           <input 
+      _ngcontent-c3="" 
+      class="form-control input-points-rounded input-login ng-untouched ng-pristine ng-valid" 
+      formcontrolname="email" 
+      name="email" 
+      type="text" 
+      placeholder="Email">
+  </div>
+
+
+  <div _ngcontent-c3="" class="input-group">
+    <i _ngcontent-c3="" aria-hidden="true" class="fa fa-lock"></i>
+    <input 
+      _ngcontent-c3="" 
+      class="form-control input-points-rounded input-login ng-untouched ng-pristine ng-valid" 
+      formcontrolname="password" 
+      name="password" 
+      type="password" 
+      placeholder="Contraseña">
+  </div>
+
+
+          
+            <div _ngcontent-c3="" class="container-forgotpass">
+          
+
+<a id="forgotPasswordLink" href="#">olvistaste tu contraseña?</a>
+    <!-- Error message display -->
+    {{#if error}}
+        <p class="error-message">{{error}}</p>
+    {{/if}}
+            </div>
+          
+          
+          <div _ngcontent-c3="" class="container-btn-login">
+            <button _ngcontent-c3="" class="btn btn-primary btn-lg ingresar" type="submit">
+              Ingresar
+            </button>
+          </div>
+
+          
+          
+          <div _ngcontent-c3="" class="registrarse">
+            ¿No tiene una cuenta?
+            <button _ngcontent-c3="" class="btn btn-link" type="button">
+              Regístrese
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<toaster-container _ngcontent-c3="" class="ng-tns-c5-0">
+        <div class="ng-tns-c5-0 toast-bottom-right" id="toast-container">
+            <!---->
+        </div>
+        </toaster-container>
+</login-carrier>
+  </app-layout>
+  <div id="loom-companion-mv3" ext-id="liecbddmkiiihnedobmlmillhodjkdmb"><div id="shadow-host-companion"></div></div></body></html>
+
+
+
+
+
+
+
+</form>
+
+<form id="forgotPasswordForm" method="POST" action="/forgot-password" style="display: none;">
+    <h2>Forgot Password?</h2>
+    <input name="email" type="email" class="text" placeholder="Correo electrónico">
+    <input type="hidden" id="emailSent" name="emailSent" value="false"> <!-- Campo oculto para controlar el envío de correo -->
+    <button id="sendEmailButton" class="signin">Enviar</button>
+    <p class="message">Te enviaremos un correo electrónico con instrucciones para recuperar tu contraseña.</p>
+    <hr>
+</form>
+
+        </div>
+    </main>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const forgotPasswordLink = document.querySelector("#forgotPasswordLink");
+        const forgotPasswordForm = document.querySelector("#forgotPasswordForm");
+
+        // Escucha el clic en el enlace "Forgot Password?"
+        forgotPasswordLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Previene el comportamiento por defecto del enlace
+            forgotPasswordForm.style.display = "block"; // Muestra el formulario de olvidaste tu contraseña
+        });
+    });
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const forgotPasswordLink = document.querySelector("#forgotPasswordLink");
+    const forgotPasswordForm = document.querySelector("#forgotPasswordForm");
+    const sendEmailButton = document.querySelector("#sendEmailButton");
+    const emailSentInput = document.querySelector("#emailSent");
+
+    // Escucha el clic en el enlace "Forgot Password?"
+    forgotPasswordLink.addEventListener("click", function(event) {
+        event.preventDefault(); // Previene el comportamiento por defecto del enlace
+        forgotPasswordForm.style.display = "block"; // Muestra el formulario de olvidaste tu contraseña
+    });
+
+    // Escucha el envío del formulario de recuperación de contraseña
+    forgotPasswordForm.addEventListener("submit", function(event) {
+        event.preventDefault(); // Previene el comportamiento por defecto del formulario
+
+        // Verifica si ya se envió el correo
+        const emailSent = emailSentInput.value === "true";
+        if (emailSent) {
+            console.log("Correo ya enviado, evitando enviar nuevamente.");
+            return;
+        }
+
+        // Cambia el valor del campo oculto para indicar que se envió el correo
+        emailSentInput.value = "true";
+
+        // Envía el formulario
+        this.submit();
+    });
+});
+</body>
+</html>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       <div class="text-center">
+<a id="forgot-password-link" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+  ¿Has olvidado la contraseña?
+</a>
+
+        <br/>
+        <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="/registrarme">
+          ¿eres nuevo da clik aqui?
+        </a>
+      </div>
+
+
+<div id="reset-password-container" class="hidden mt-4">
+          <label class="block text-sm font-bold mb-2" for="reset-email">Correo Electrónico</label>
+          <input type="email" id="reset-email" name="reset-email" class="w-full p-2 border rounded" placeholder="Digita tu correo para restablecer clave">
+          <button id="send-reset-link" type="button" class="w-full bg-blue-500 text-white p-2 mt-4 rounded">Enviar Enlace</button>
+          <p id="reset-message" class="text-center mt-4 text-green-500 hidden"></p>
+        </div>
+
+    </div>
+  </div>
+
+  <div class="fixed bottom-4 right-4 flex space-x-4 floating-buttons">
+    <a class="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition" href="https://wa.me/573106993809" target="_blank">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+    <a class="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition" href="tel:+573106993809">
+      <i class="fas fa-phone"></i>
+    </a>
+  </div>
+      </form>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Toggle de contraseña
+    const passwordToggle = document.querySelector(".password-toggle");
+    const passwordField = document.getElementById("password");
+
+    // Crear e insertar el contenedor de reset password
+    const resetPasswordHTML = `
+    <div id="reset-password-container" class="hidden mt-4">
+      <label class="block text-sm font-bold mb-2" for="reset-email">Correo Electrónico</label>
+      <input type="email" id="reset-email" name="reset-email" class="w-full p-2 border rounded" placeholder="Digita tu correo para restablecer clave">
+      <button id="send-reset-link" type="button" class="w-full bg-blue-500 text-white p-2 mt-4 rounded">Enviar Enlace</button>
+      <button id="back-to-login" type="button" class="w-full bg-gray-500 text-white p-2 mt-2 rounded">Volver al Login</button>
+      <p id="reset-message" class="text-center mt-4 text-green-500 hidden"></p>
+    </div>`;
+    document.querySelector('body').insertAdjacentHTML('beforeend', resetPasswordHTML);
+
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
+    const resetPasswordContainer = document.getElementById('reset-password-container');
+
+    if (forgotPasswordLink && resetPasswordContainer) {
+      forgotPasswordLink.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector('.form').classList.add('hidden');
+        resetPasswordContainer.classList.remove('hidden');
+        document.getElementById('reset-email').focus();
+      });
+    }
+
+    document.getElementById('back-to-login').addEventListener('click', function () {
+      resetPasswordContainer.classList.add('hidden');
+      document.querySelector('.form').classList.remove('hidden');
+    });
+  });
+
+
+    document.getElementById('send-reset-link').addEventListener('click', async function() {
+    const email = document.getElementById('reset-email').value;
+    const resetMessage = document.getElementById('reset-message');
+    
+    if (!email) {
+      resetMessage.textContent = "Por favor ingresa tu correo electrónico";
+      resetMessage.classList.remove('hidden');
+      resetMessage.classList.add('text-red-500');
+      resetMessage.classList.remove('text-green-500');
+      return;
+    }
+
+    try {
+      // Mostrar mensaje de carga
+      resetMessage.textContent = "Enviando enlace...";
+      resetMessage.classList.remove('hidden');
+      resetMessage.classList.remove('text-red-500');
+      resetMessage.classList.add('text-blue-500');
+      
+      // Deshabilitar el botón para evitar múltiples clics
+      this.disabled = true;
+      this.textContent = "Enviando...";
+      
+      // Enviar la solicitud al servidor
+      const response = await fetch('/request-password-reset', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+      });
+      
+      const data = await response.json();
+      
+      if (response.ok) {
+        resetMessage.textContent = "✔️ Se ha enviado un enlace a tu correo electrónico. Revisa tu bandeja de entrada.";
+        resetMessage.classList.remove('text-blue-500');
+        resetMessage.classList.add('text-green-500');
+      } else {
+        resetMessage.textContent = data.message || "❌ Error al enviar el enlace. Intenta nuevamente.";
+        resetMessage.classList.remove('text-blue-500');
+        resetMessage.classList.add('text-red-500');
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      resetMessage.textContent = "❌ Error de conexión. Intenta nuevamente.";
+      resetMessage.classList.remove('text-blue-500');
+      resetMessage.classList.add('text-red-500');
+    } finally {
+      // Restaurar el botón
+      this.disabled = false;
+      this.textContent = "Enviar Enlace";
+      
+      // Ocultar el mensaje después de 5 segundos
+      setTimeout(() => {
+        resetMessage.classList.add('hidden');
+      }, 5000);
+    }
+  });
+
+</script>
+
+</body>
+</html>

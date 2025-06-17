@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar cliente</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+   <style>
+        /* Contenedor principal */
+        .container {
+            max-width: 1000px;
+            margin: 1rem auto;
+            padding: 2rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Títulos principales */
+        h1, h2.section-title, h3 {
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: #1E99D3;
+        }
+
+        /* Formulario en grid con iconos */
+        form {
+            display: flex;
+            flex-direction: column; /* Cambia a una sola columna */
+            width: 100%;
+            gap: 0.75rem; /* Espaciado entre elementos */
+        }
+
+        /* Etiquetas con iconos */
+        label {
+            font-weight: bold;
+            color: #7CB646;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Iconos */
+        .icon {
+            color: #1E99D3 ;
+            font-size: 1.2rem;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="file"] {
+            padding: 0.75rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            width: 100%; /* Asegúrate de que los inputs ocupen el 100% del ancho */
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+            font-size: 1rem;
+        }
+
+        input:focus {
+            border-color: #1E99D3;
+            outline: none;
+        }
+
+        /* Ajustes para los títulos de secciones y miembros */
+        h2.section-title, h3 {
+            font-size: 1.2rem;
+            color: #C92458;
+            text-align: left;
+        }
+
+        /* Botón */
+        button[type="submit"] {
+            padding: 0.75rem;
+            background-color: #EFA325;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #C92458;
+        }
+
+        /* Media queries para responsividad */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            input[type="text"],
+            input[type="date"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="file"] {
+                font-size: 0.95rem;
+                padding: 0.6rem;
+            }
+
+            button[type="submit"] {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1rem;
+            }
+
+            h1, h2.section-title, h3 {
+                font-size: 1.25rem;
+            }
+
+            input[type="text"],
+            input[type="date"],
+            input[type="email "],
+            input[type="tel"],
+            input[type="file"] {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+
+            button[type="submit"] {
+                font-size: 0.95rem;
+                padding: 0.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-building icon"></i> AGREGAR NUEVO EDIFICIO</h1>
+
+        <form id="proveedorForm" method="POST" action="/agregar-edificio" enctype="multipart/form-data">
+            <label for="fechaincio"><i class="fas fa-calendar-alt icon"></i>FECHA DE INICIO:</label>
+            <input type="date" id="fechaincio" name="fechaincio" required>
+
+            <label for="nombre"><i class="fas fa-building icon"></i>NOMBRE EDIFICIO:</label>
+            <input type="text" id="nombre" name="nombre" required>
+
+            <label for="nit"><i class="fas fa-id-badge icon"></i>NIT:</label>
+            <input type="text" id="nit" name="nit" required>
+
+            <label for="cedula_representante_legal"><i class="fas fa-id-card icon"></i>CEDULA REPRESENTANTE LEGAL:</label>
+            <input type="text" id="cedula_representante_legal" name="cedula_representante_legal" required>
+
+            <label for="nombre_representante_legal"><i class="fas fa-user icon"></i>NOMBRE DEL REPRESENTANTE LEGAL:</label>
+            <input type="text" id="nombre_representante_legal" name="nombre_representante_legal" >
+
+            <label for="direccion"><i class="fas fa-map-marker-alt icon"></i>DIRECCION:</label>
+            <input type="text" id="direccion" name="direccion" >
+
+            <label for="correorepresentante"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO Administrativo:</label>
+            <input type="email" id="correorepresentante" name="correorepresentante" >
+
+            <label for="telefono"><i class="fas fa-phone icon"></i>TELEFONO:</label>
+            <input type="tel" id="telefono" name="telefono" >
+
+            <label for="foto"><i class="fas fa-camera icon"></i>FOTO:</label>
+            <input type="file" id="foto" name="foto" accept="image/*" >
+
+            <h2 class="section-title">MIEMBROS DEL CONSEJO</h2>
+
+            <!-- Miembro 1 -->
+            <h3><i class="fas fa-user icon"></i> Miembro del consejo n° 1</h3>
+            <label for="miembro1"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+            <input type="text" id="miembro1" name="miembro1">
+            <label for="direccion1"><i class="fas fa-map-marker-alt icon"></i>DIRECCION:</label>
+            <input type="text" id="direccion1" name="direccion1">
+            <label for="correo1"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+            <input type="email" id="correo1" name="correo1">
+            <label for="telefono1"><i class="fas fa-phone icon"></i>TELEFONO:</label>
+            <input type="tel" id="telefono1" name="telefono1">
+
+            <!-- Miembro 2 -->
+            <h3><i class="fas fa-user icon"></i> Miembro del consejo n°  2</h3>
+            <label for="miembro2"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+            <input type="text" id="miembro2" name="miembro2">
+            <label for="direccion2"><i class="fas fa-map-marker-alt icon"></i>DIRECCION:</label>
+            <input type="text" id="direccion2" name="direccion2">
+            <label for="correo2"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+            <input type="email" id="correo2" name="correo2">
+            <label for="telefono2"><i class="fas fa-phone icon"></i>TELEFONO:</label>
+            <input type="tel" id="telefono2" name="telefono2">
+
+            <!-- Miembro 3 -->
+            <h3><i class="fas fa-user icon"></i> Miembro del consejo n°  3</h3>
+            <label for="miembro3"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+            <input type="text" id="miembro3" name="miembro3">
+            <label for="direccion3"><i class="fas fa-map-marker-alt icon"></i>DIRECCION:</label>
+            <input type="text" id="direccion3" name="direccion3">
+            <label for="correo3"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+            <input type="email" id="correo3" name="correo3">
+            <label for="telefono3"><i class="fas fa-phone icon"></i>TELEFONO:</label>
+            <input type="tel" id="telefono3" name="telefono3">
+
+
+
+<h3>Miembros del comite  </h3>
+<!-- Miembro 1 -->
+<h3><i class="fas fa-user icon"></i> Miembro del comite n° 1</h3>
+<label for="miembro_comite1_nombre"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+<input type="text" id="miembro_comite1_nombre" name="miembro_comite1_nombre">
+<label for="miembro_comite1_cedula"><i class="fas fa-id-card icon"></i>CEDULA:</label>
+<input type="text" id="miembro_comite1_cedula" name="miembro_comite1_cedula">
+<label for="miembro_comite1_celular"><i class="fas fa-phone icon"></i>CELULAR:</label>
+<input type="tel" id="miembro_comite1_celular" name="miembro_comite1_celular">
+<label for="miembro_comite1_correo"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+<input type="email" id="miembro_comite1_correo" name="miembro_comite1_correo">
+
+<!-- Miembro 2 -->
+<h3><i class="fas fa-user icon"></i> Miembro del comite n°  2</h3>
+<label for="miembro_comite2_nombre"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+<input type="text" id="miembro_comite2_nombre" name="miembro_comite2_nombre">
+<label for="miembro_comite2_cedula"><i class="fas fa-id-card icon"></i>CEDULA:</label>
+<input type="text" id="miembro_comite2_cedula" name="miembro_comite2_cedula">
+<label for="miembro_comite2_celular"><i class="fas fa-phone icon"></i>CELULAR:</label>
+<input type="tel" id="miembro_comite2_celular" name="miembro_comite2_celular">
+<label for="miembro_comite2_correo"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+<input type="email" id="miembro_comite2_correo" name="miembro_comite2_correo">
+
+<!-- Miembro 3 -->
+<h3><i class="fas fa-user icon"></i> Miembro del comite n° 3</h3>
+<label for="miembro_comite3_nombre"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+<input type="text" id="miembro_comite3_nombre" name="miembro_comite3_nombre">
+<label for="miembro_comite3_cedula"><i class="fas fa-id-card icon"></i>CEDULA:</label>
+<input type="text" id="miembro_comite3_cedula" name="miembro_comite3_cedula">
+<label for="miembro_comite3_celular"><i class="fas fa-phone icon"></i>CELULAR:</label>
+<input type="tel" id="miembro_comite3_celular" name="miembro_comite3_celular">
+<label for="miembro_comite3_correo"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+<input type="email" id="miembro_comite3_correo" name="miembro_comite3_correo">
+
+
+
+
+<!-- Miembro 4 -->
+<h3><i class="fas fa-user icon"></i> Miembro del comite n° 4</h3>
+<label for="miembro_comite4_nombre"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+<input type="text" id="miembro_comite4_nombre" name="miembro_comite4_nombre">
+<label for="miembro_comite4_cedula"><i class="fas fa-id-card icon"></i>CEDULA:</label>
+<input type="text" id="miembro_comite4_cedula" name="miembro_comite4_cedula">
+<label for="miembro_comite4_celular"><i class="fas fa-phone icon"></i>CELULAR:</label>
+<input type="tel" id="miembro_comite4_celular" name="miembro_comite4_celular">
+<label for="miembro_comite4_correo"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+<input type="email" id="miembro_comite4_correo" name="miembro_comite4_correo">
+
+<!-- Miembro 5 -->
+<h3><i class="fas fa-user icon"></i> Miembro del comite n° 5</h3>
+<label for="miembro_comite5_nombre"><i class="fas fa-user icon"></i>NOMBRE COMPLETO:</label>
+<input type="text" id="miembro_comite5_nombre" name="miembro_comite5_nombre">
+<label for="miembro_comite5_cedula"><i class="fas fa-id-card icon"></i>CEDULA:</label>
+<input type="text" id="miembro_comite5_cedula" name="miembro_comite5_cedula">
+<label for="miembro_comite5_celular"><i class="fas fa-phone icon"></i>CELULAR:</label>
+<input type="tel" id="miembro_comite5_celular" name="miembro_comite5_celular">
+<label for="miembro_comite5_correo"><i class="fas fa-envelope icon"></i>CORREO ELECTRONICO:</label>
+<input type="email" id="miembro_comite5_correo" name="miembro_comite5_correo">
+
+
+
+
+
+
+
+
+
+            <button type="submit"><i class="fas fa-plus icon"></i> AGREGAR EDIFICIO</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#proveedorForm').on('submit', function(e){
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    type: 'POST',
+                    url: '/agregar-edificio',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        alert('Edificio agregado correctamente');
+                        $('#proveedorForm')[0].reset();
+                    },
+                    error: function(err) {
+                        alert('Error al agregar el proveedor');
+                    }
+                });
+            });
+        });
+    </script>
+        <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Usuario</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Estilos generales */
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .form-container h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .form-group label {
+            color: #555;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        .form-group input, .form-group select {
+            padding: 10px;
+            padding-left: 35px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #1E99D3;
+        }
+        .form-group .icon {
+            position: absolute;
+            top: 38px;
+            left: 10px;
+            color: #aaa;
+            font-size: 18px;
+        }
+        button[type="submit"] {
+            background-color: #1E99D3;
+            color: #fff;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button[type="submit"]:hover {
+            background-color: #7CB646;
+        }
+        /* Estilo de íconos */
+        .icon {
+            color: #666;
+        }
+        /* Ocultar el campo de cargo inicialmente */
+        #cargo-group {
+            display: none;
+            flex-direction: column;
+        }
+        /* Estilos para el grupo de casillas de verificación */
+        #cargo-group label {
+            display: flex;
+            align-items: center;
+            font-weight: normal;
+            margin-left: 30px;
+        }
+        #cargo-group input[type="checkbox"] {
+            margin-right: 8px;
+        }
+                /* Ocultar el campo de cargo, edificio y apartamento inicialmente */
+        #cargo-group, #edificio-group, #apartamento-group {
+            display: none;
+            flex-direction: column;
+        }
+    </style>
+    <script>
+        function toggleCargoField() {
+            const roleSelect = document.getElementById("role");
+            const cargoGroup = document.getElementById("cargo-group");
+            // Mostrar el campo de cargo si el rol es "admin"
+            cargoGroup.style.display = roleSelect.value === "admin" ? "flex" : "none";
+        }
+    </script>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Agregar Usuario</h2>
+<form action="/guardar_usuario" method="POST" enctype="multipart/form-data" autocomplete="off">
+
+
+<div class="form-group">
+    <label for="foto"><i class="fas fa-camera icon"></i> Foto (opcional):</label>
+    <input type="file" id="foto" name="foto" accept="image/*">
+</div>
+
+
+
+
+
+            <div class="form-group">
+
+
+                
+                <label for="nombre"><i class="fas fa-user icon"></i> Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+    <label for="fecha_cumpleaños"><i class="fas fa-birthday-cake icon"></i> Fecha de Cumpleaños:</label>
+    <input type="date" id="fecha_cumpleaños" name="fecha_cumpleaños" required>
+</div>
+            <div class="form-group">
+                <label for="user_email"><i class="fas fa-envelope icon"></i> Email:</label>
+                <input type="email" id="user_email" name="user_email" required autocomplete="nope">
+            </div>
+ 
+
+
+            <div class="form-group">
+                <label for="role"><i class="fas fa-user-tag icon"></i> Rol:</label>
+                <select id="role" name="role" required onchange="toggleCargoField()">
+                    <option value="">Selecciona un rol</option>
+                    <option value="admin">Administrador</option>
+                    <option value="residentes">Residente</option>
+                   <option value="Propietario">Propietario</option>
+                </select>
+            </div>
+
+<!-- Campo de cargo con radios -->
+<div class="form-group" id="cargo-group">
+  <label><i class="fas fa-briefcase icon"></i> Cargo:</label>
+  <label><input type="radio" name="cargo" value="4"> Gerente</label>
+  <label><input type="radio" name="cargo" value="2"> Administración Operativa</label>
+  <label><input type="radio" name="cargo" value="3"> Contabilidad</label>
+  <label><input type="radio" name="cargo" value="1"> Operativo</label>
+</div>
+
+
+
+
+        <!-- Campo de Edificio (solo visible si el rol es residente) -->
+  <!-- Campo de Edificio (solo visible si el rol es residente) -->
+<div class="form-group" id="edificio-group">
+    <label for="edificio"><i class="fas fa-building icon"></i> Edificio:</label>
+    <select id="edificio" name="edificio" onchange="cargarApartamentos()">
+        <option value="">Selecciona un edificio</option>
+        {{#each edificios}}
+            <option value="{{this.id}}">{{this.nombre}}</option>
+        {{/each}}
+    </select>
+</div>
+
+
+<!-- Campo de Apartamento (solo visible si el rol es residente) -->
+<div class="form-group" id="apartamento-group">
+    <label for="apartamento"><i class="fas fa-door-closed icon"></i> Apartamento:</label>
+    <select id="apartamento" name="apartamento">
+        <option value="">Selecciona un apartamento</option>
+    </select>
+</div>
+
+            <button type="submit"><i class="fas fa-user-plus"></i> Agregar Usuario</button>
+        </form>
+    </div>
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+</script>
+
+    <Script>
+
+  // Función para cargar apartamentos en función del edificio seleccionado
+    async function cargarApartamentos() {
+        const edificioId = document.getElementById('edificio').value;
+        const apartamentoSelect = document.getElementById('apartamento');
+        
+        // Limpiar el selector de apartamentos
+        apartamentoSelect.innerHTML = '<option value="">Selecciona un apartamento</option>';
+
+        if (edificioId) {
+            try {
+                const response = await fetch(`/api/apartamentosss/${edificioId}`);
+                const apartamentos = await response.json();
+
+                // Agregar opciones de apartamentos al selector
+                apartamentos.forEach(apartamento => {
+                    const option = document.createElement('option');
+                    option.value = apartamento.id;
+                    option.textContent = apartamento.numero;
+                    apartamentoSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error al cargar apartamentos:', error);
+            }
+        }
+    }
+
+function toggleCargoField() {
+    const roleSelect = document.getElementById("role");
+    const cargoGroup = document.getElementById("cargo-group");
+    const edificioGroup = document.getElementById("edificio-group");
+    const apartamentoGroup = document.getElementById("apartamento-group");
+
+    if (roleSelect.value === "admin") {
+        cargoGroup.style.display = "flex";
+        edificioGroup.style.display = "none";
+        apartamentoGroup.style.display = "none";
+    } 
+    else if (roleSelect.value === "residentes" || roleSelect.value === "Propietario") {
+        cargoGroup.style.display = "none";
+        edificioGroup.style.display = "flex";
+        apartamentoGroup.style.display = (roleSelect.value === "residentes") ? "flex" : "none";
+    } 
+    else {
+        cargoGroup.style.display = "none";
+        edificioGroup.style.display = "none";
+        apartamentoGroup.style.display = "none";
+    }
+}
+
+      // Mostrar los campos de edificio y apartamento si el rol es "residentes" o "Propietario"
+      else if (roleSelect.value === "residentes" || roleSelect.value === "Propietario") {
+          cargoGroup.style.display = "none";
+          edificioGroup.style.display = "flex";
+          apartamentoGroup.style.display = (roleSelect.value === "residentes") ? "flex" : "none";
+          
+          const operativoCheckbox = cargoGroup.querySelector('input[value="operativo"]');
+          if (operativoCheckbox) {
+              operativoCheckbox.checked = false;
+              operativoCheckbox.disabled = false;
+          }
+      } 
+      else {
+          cargoGroup.style.display = "none";
+          edificioGroup.style.display = "none";
+          apartamentoGroup.style.display = "none";
+          
+          const operativoCheckbox = cargoGroup.querySelector('input[value="operativo"]');
+          if (operativoCheckbox) {
+              operativoCheckbox.checked = false;
+              operativoCheckbox.disabled = false;
+          }
+      }
+  }
+
+ 
+    </Script>
+    
+</body>
+</html>

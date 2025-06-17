@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear PQRS</title>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #eaf4fc, #fefefe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 15px;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #34495e;
+            display: block;
+            margin-bottom: 6px;
+            margin-top: 20px;
+        }
+
+        select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #d0d7de;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border 0.3s ease, box-shadow 0.3s ease;
+            resize: vertical;
+        }
+
+        select:focus, textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.1);
+        }
+
+        button[type="submit"] {
+            margin-top: 30px;
+            width: 100%;
+            padding: 14px;
+            background: #3498db;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #2980b9;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .form-container {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>Crear PQRS</h2>
+
+        <form id="formPQRS">
+            <label for="tipo">Tipo de PQRS:</label>
+            <select name="tipo" required>
+                <option value="Petición">Petición</option>
+                <option value="Queja">Queja</option>
+                <option value="Reclamo">Reclamo</option>
+                <option value="Sugerencia">Sugerencia</option>
+            </select>
+
+            <label for="mensaje">Mensaje:</label>
+            <textarea name="mensaje" rows="5" placeholder="Describe aquí tu solicitud..." required></textarea>
+
+            <button type="submit">📨 Enviar PQRS</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('formPQRS').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Mostrar mensaje bonito de confirmación
+            Swal.fire({
+                icon: 'success',
+                title: '📩 ¡PQRS enviada!',
+                text: 'Gracias por comunicarte con nosotros. Tu mensaje ha sido recibido.',
+                confirmButtonColor: '#3498db'
+            });
+
+            // Resetear formulario
+            this.reset();
+        });
+    </script>
+
+</body>
+</html>

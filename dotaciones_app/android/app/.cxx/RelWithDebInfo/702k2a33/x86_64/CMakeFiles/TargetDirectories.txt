@@ -1,0 +1,2 @@
+C:/Users/USUARIO/Desktop/CERCETAAPP/Cerceta/vianco_app/android/app/.cxx/RelWithDebInfo/702k2a33/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/USUARIO/Desktop/CERCETAAPP/Cerceta/vianco_app/android/app/.cxx/RelWithDebInfo/702k2a33/x86_64/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Edificio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+        h1 {
+            text-align: center;
+            color: #413d4b;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, textarea {
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #413d4b;
+            color: white;
+            cursor: pointer;
+        }
+        .foto-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .foto-container img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .icon-label {
+            display: flex;
+            align-items: center;
+        }
+        .icon-label i {
+            margin-right: 8px;
+            color: #1E99D3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Editar Edificio</h1>
+        <form action="/update_edificio" method="post">
+            <input type="hidden" name="id" value="{{edificio.id}}">
+            <div class="foto-container">
+                {{#if edificio.foto}}
+                <img src="data:image/jpeg;base64,{{edificio.foto}}" alt="Foto del edificio">
+                {{/if}}
+            </div>
+            <div class="icon-label">
+                <i class="fas fa-building"></i>
+                <label for="nombre">Nombre</label>
+            </div>
+            <input type="text" id="nombre" name="nombre" value="{{edificio.nombre}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-calendar-alt"></i>
+                <label for="fechaincio">Fecha de Inicio</label>
+            </div>
+            <input type="date" id="fechaincio" name="fechaincio" value="{{edificio.fechaincio}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-user-tie"></i>
+                <label for="nombre_representante_legal">Nombre del Representante Legal</label>
+            </div>
+            <input type="text" id="nombre_representante_legal" name="nombre_representante_legal" value="{{edificio.nombre_representante_legal}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-id-card"></i>
+                <label for="nit">NIT</label>
+            </div>
+            <input type="text" id="nit" name="nit" value="{{edificio.nit}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-id-badge"></i>
+                <label for="cedula_representante_legal">Cédula del Representante Legal</label>
+            </div>
+            <input type="text" id="cedula_representante_legal" name="cedula_representante_legal" value="{{edificio.cedula_representante_legal}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-map-marker-alt"></i>
+                <label for="direccion">Dirección</label>
+            </div>
+            <input type="text" id="direccion" name="direccion" value="{{edificio.direccion}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-envelope"></i>
+                <label for="correorepresentante">Correo de administracion</label>
+            </div>
+            <input type="email" id="correorepresentante" name="correorepresentante" value="{{edificio.correorepresentante}}" required>
+
+            <div class="icon-label">
+                <i class="fas fa-phone"></i>
+                <label for="telefono">Teléfono</label>
+            </div>
+            <input type="text" id="telefono" name="telefono" value="{{edificio.telefono}}" required>
+
+            <button type="submit"><i class="fas fa-save"></i> Guardar Cambios</button>
+        </form>
+    </div>
+        <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+</script>
+
+</body>
+</html>

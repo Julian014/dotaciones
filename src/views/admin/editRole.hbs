@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User Role</title>
+    <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
+    
+      <style>
+
+    #vigilado{
+    float: right;
+    position: relative;
+    top: 74px;
+    right: 4%;
+    }
+    #logo{
+    position: relative;
+    left: 3%;
+    
+
+}
+ 
+*{
+ 
+    padding: 0px;
+    margin-top: 0%;
+    margin: 0%;
+  
+}
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <img id="membrete"   src="/imagenes/menbrete.png"/>
+        <img  id="logo"      src="/imagenes/logo vianco.png"/>
+        <img  id="vigilado"  src="/imagenes/vigilado.png"/>
+        
+       
+ 
+
+
+
+
+    </header>
+    <hr>
+    <style>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            /* Agregué esta propiedad */
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #90c9a7;
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #90c9a7;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            /* Agregué esta propiedad */
+        }
+
+        .button:hover {
+            background-color: #5a8f77;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-button a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+            display: inline-block;
+            /* Agregué esta propiedad */
+            background-color: #5a8f77;
+            /* Cambié el color de fondo */
+            padding: 10px 20px;
+            /* Ajusté el espaciado */
+            border-radius: 5px;
+            /* Agregué bordes redondeados */
+            margin-right: 10px;
+            /* Añadí margen derecho */
+        }
+
+        .back-button a:hover {
+            color: #ccc;
+        }
+
+        .note {
+            position: absolute;
+            top: 290px;
+            right: 20px;
+            background-color: #90c9a7;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .note ul {
+            padding-left: 20px;
+            margin-top: 5px;
+        }
+
+        .note ul li {
+            margin-bottom: 5px;
+        }
+       
+         footer {
+            background-color: #222;
+            padding: 4.9rem;
+            color: #ffff;
+            position:relative;
+            top: 363px;
+            margin: 0;
+        }
+        footer section {
+            float:right ;
+            margin:0;
+            position: relative;
+            top: -60px;
+        }
+        footer a {
+            transition: color 0.3s ease;
+            color: #ffff;
+            text-decoration: none;
+        }
+        footer a:hover {
+            color: rgb(162, 204, 170);
+        }
+        footer p {
+            position:relative;
+            float: left;
+            left: -1199px;
+            color: #ffff;
+            font-size: 20px;
+        }
+        .nav-item {
+            margin-left: 15px;
+        }
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="note">
+        <p>Roles existentes:</p>
+        <ul>
+            <li>GERENCIA</li>
+            <li>ADMINISTRATIVO</li>
+            <li>EJECUTIVO</li>
+            <!-- Agrega aquí más roles si es necesario -->
+        </ul>
+    </div>
+    <div class="container">
+        <h1>EDITAR PERMISOS</h1>
+        <form action="/admin/editRole/{{user.id}}/edit" method="POST">
+            <label for="newRole">PERMISOS</label>
+            <input type="text" id="newRole" name="newRole" value="{{user.roles}}">
+            <button type="submit" class="button" onclick="showMessage()">GUARDAR</button>
+        </form>
+        <div class="back-button">
+            <a href="/" class="button">Volver al Menú</a>
+        </div>
+    </div>
+    <footer>
+        <section>
+            <li id="nombre" class="nav-item px-4">
+                <p class="font-semibold">permisos vianco</p>
+            </li>
+            <a href="mailto:soporte.it.vianco@gmail.com">soporte.it.vianco@gmail.com</a>
+            <p>Copyrigt soporteVianco</p>
+            <br>
+               
+            <hr>
+            
+            <nav class="">
+               
+                </ul>
+            </nav>
+        </section>
+    </footer>
+
+    <!-- Script para mostrar el mensaje -->
+    <script>
+        function showMessage() {
+            alert('Cambio realizado');
+        }
+    </script>
+</body>
+
+</html>

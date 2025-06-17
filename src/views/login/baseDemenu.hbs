@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CERCETA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.css" rel="stylesheet">
+</head>
+<style>
+    @font-face {
+        font-family: 'sensation';
+        src:url(fuentes/Sansation/Sansation_Regular.ttf) ;
+        font-weight: bold;
+        font-style: bold;
+    }
+:root {
+    --bg-dark: #2d2d2d; /* Color primario de tu empresa */
+    --bg-darker: white; /* Segundo color */
+    --primary-color: #2e9ed5; /* Tercer color */
+    --text-light: #f5f5f5; /* Texto claro */
+    --text-muted: #b0b0b0; /* Texto suavizado */
+    --accent-color: #1E99D3; /* Color acento */
+    --sidebar-width: 250px;
+}
+    * {
+        font-family:'sensation';
+       font-weight: bold;
+        font-style: bold;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family:'sensation';
+        background-color: #d6cec3;
+        color: var(--text-light);
+        display: flex;
+    }
+
+.container {
+    display: flex;
+    width: 100%;
+    transition: width 0.3s ease;
+}
+    .sidebar {
+        width: var(--sidebar-width);
+        background-color: var(--bg-dark);
+        padding: 20px;
+        height: 100vh;
+    }
+
+    .sidebar-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+
+    .sidebar-header img.logo {
+        width: 250px;
+        margin-bottom: 10px;
+    }
+
+    .sidebar-header p {
+        font-size: 20px;
+        color: var(--text-light);
+    }
+
+    .sidebar-menu {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar-menu li {
+        padding: 15px 10px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        color: var(--text-light);
+        position: relative;
+        border-bottom: 1px solid white; /* Agregar una división blanca */
+
+    }
+
+    .sidebar-menu li:hover {
+    background-color: var(--primary-color);
+        border-radius: 10px;
+    }
+
+    .sidebar-menu li i {
+        margin-right: 10px;
+    }
+
+.sidebar.hidden-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+    padding: 20px;
+    transition: width 0.3s ease;
+}
+
+.main-content.expanded-content {
+    width: 100% !important;
+}
+
+    .top-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background-color:#C92458;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        color: white;
+            font-weight: bold; /* Añadir negrilla */
+font-size: 25px;
+    }
+
+
+    .top-right {
+        display: flex;
+        align-items: center;
+    }
+
+    .top-right i {
+        margin-left: 20px;
+        font-size: 24px;
+        position: relative;
+    }
+
+    .badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: var(--accent-color);
+        color: white;
+        padding: 5px 8px;
+        border-radius: 50%;
+        font-size: 12px;
+    }
+
+    .dashboard-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card {
+        background-color: var(--bg-dark);
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+
+    .stat {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .stat-icon {
+        font-size: 40px;
+        color: var(--accent-color);
+    }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 20px;
+    }
+
+    .chart-container {
+        padding: 20px;
+        background-color: var(--bg-dark);
+        border-radius: 10px;
+    }
+
+    .profile-menu {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        top: 40px;
+        right: 0;
+        background-color: var(--bg-dark);
+        border-radius: 10px;
+        padding: 10px;
+        display: none;
+        flex-direction: column;
+        width: 150px;
+        z-index: 1;
+    }
+
+    .dropdown-menu a {
+        padding: 10px;
+        text-decoration: none;
+        color: var(--text-light);
+        display: block;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: var(--primary-color);
+        border-radius: 5px;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .show {
+        display: flex;
+    }
+
+    .submenu {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 0;
+        display: none;
+        max-height: 0;
+        overflow: hidden;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 200px;
+        background-color: white;
+        border-radius: 5px;
+        z-index: 1000;
+        transition: max-height 0.3s ease-out;
+    }
+
+    .menu-item {
+        display: block;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .submenu.show {
+        display: block;
+        max-height: 500px;
+        transition: max-height 0.3s ease-in;
+    }
+
+    .submenu li {
+        background-color: white;
+        padding: 10px;
+        cursor: pointer;
+        color: black;
+            border-bottom: 1px solid black; /* División negra entre items del submenu */
+
+    }
+
+    .submenu li:hover {
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 5px;
+    }
+
+    .menu-item.active {
+        background-color: #4b6b96;
+        color: white;
+        border-radius: 10px;
+    }
+
+    .submenu li.active {
+        background-color: #4b6b96;
+        color: white;
+        border-radius: 5px;
+    }
+    A{
+        text-decoration: none;
+    }
+
+.toggle-menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.hidden-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.sidebar {
+    transition: transform 0.3s ease;
+}
+
+.main-content {
+    width: calc(100% - var(--sidebar-width));
+    padding: 20px;
+    transition: width 0.3s ease;
+}
+
+.sidebar.hidden-sidebar ~ .main-content {
+    width: 100% !important;
+}
+
+.sidebar.hidden-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+}
+
+.main-content.expanded-content {
+    width: 100% !important;
+}
+
+#home {
+    text-decoration: none;
+    color: white;
+}
+h2 {
+    font-weight: 600;
+    font-size: 2rem; /* Mejora la visibilidad del título */
+}
+
+p {
+    font-size: 1rem;
+    color: var(--text-muted); /* Texto más sutil */
+}
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra más intensa al pasar el ratón */
+}
+.submenu {
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+    opacity: 0;
+}
+
+.submenu.show {
+    opacity: 1;
+}
+
+button, .menu-item:hover {
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05); /* Ligero zoom */
+}
+.dropdown-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+</style>
+
+<body>
+    
+    <div class="container">
+
+
+
+
+        <aside class="sidebar">
+       <div class="sidebar-header">
+<br>
+<br>
+<div class="fondologo"></div>
+    <img class="logo" src="imagenes/2022cercetafinal-BLANCO_Mesa de trabajo 1.png" alt="AdminKit Logo">
+    <br>
+    <br>
+    <p>MENU</p>
+</div>
+
+
+
+            <ul class="sidebar-menu">
+                     <li class="menu-item">
+                    <i class="fas fa-home"></i> <a id="home" href="/menuAdministrativo">INICIO</a> 
+                 
+                </li>
+                <li class="menu-item">
+                    <i class="fas fa-user"></i> USUARIOS
+                    <ul class="submenu">
+                    <a href=""><li>Agregar Usuario</li></a>    
+                      <a href=""><li>Ver Usuarios</li></a>  
+                    </ul>
+                </li>
+
+
+                
+                <li class="menu-item">
+<i class="fas fa-building"></i> APARTAMENTOS
+                    <ul class="submenu">
+                     <a href="/agregar_apartamento"><li>Agregar Apartamento</li></a>   
+                         <a href="/Consulta_apartamentos"><li>Consultar Apartamentos</li></a> 
+                    <a href="envio_apartamentos"><li>Realizar comunicado</li></a>      
+                    </ul>
+                </li>
+                <li class="menu-item">
+<i class="fas fa-city"></i> EDIFICIOS
+                    <ul class="submenu">
+
+                     <a href="/agregar_edificio"> <li>Agregar Edificio</li></a>    
+                     <a href="/consultar_edificios"><li>Consultar Edificio</li></a>  
+                     <a href="/ComunicadosGeneral">  <li>Realizar comunicado</li></a>   
+
+
+                    </ul>
+                </li>
+                <li class="menu-item">
+<i class="fas fa-dollar-sign"></i> PAGOS
+                    <ul class="submenu">
+
+
+                     <a href="/validar_pagos"><li>Subir pagos</li></a> 
+                     <a href="/Consulta_Comprobantes_de_Pago"><li>Consultar pagos</li></a>   
+
+                    </ul>
+                </li>
+          
+                <li class="menu-item">
+                    <i class="fas fa-map-marker-alt"></i> GEOLOCALIZACION
+                    <ul class="submenu">
+
+                    <a href="/geolocalizacion"> <li>VER MAPA</li></a>   
+                    <a href=""> <li>SEGUIMIENTO</li></a>   
+
+
+
+                    </ul>
+                </li>
+                
+
+            <li class="menu-item">
+<i class="fas fa-comments"></i> BLOG RESIDENCIALES
+                    <ul class="submenu">
+
+
+                     <a href=""><li>CONSULTA DE BLOGS</li></a>   
+                     <a href=""><li>CREAR NUEVA PUBLICACION</li></a>   
+
+
+                    </ul>
+                </li>
+                
+            <li class="menu-item">
+<i class="fas fa-file-alt"></i> INFORMES
+                    <ul class="submenu">
+
+
+                    <a href=""><li>CREAR INFORME OPERATIVO</li></a>     
+                   <a href=""><li>CONSULTA DE INFORMES</li></a>   
+
+
+
+
+                    </ul>
+                </li>
+                
+
+
+      <li class="menu-item">
+                    <i class="fas fa-cogs"></i> CONFIGURACION
+                    <ul class="submenu">
+
+                    <a href=""><li>Preferencias</li></a>   
+                    <a href=""> <li>Seguridad</li></a>   
+
+                    </ul>
+                </li>
+
+
+
+            </ul>
+
+
+        </aside>
+
+
+
+
+
+
+
+        <section class="main-content">
+
+<nav class="top-navbar">
+    <div class="brand">Administracion</div>
+    <div class="top-right">
+        <i class="fas fa-bell"></i> <span class="badge"></span>
+        <i class="fas fa-envelope"></i> <span class="badge"></span>
+        <div class="profile-menu">
+            <i class="fas fa-user-circle" id="profile-icon"></i>
+            <div id="dropdown-menu" class="dropdown-menu hidden">
+                <a href="#">Editar</a>
+                <a href="/logout">Cerrar Sesión</a>
+            </div>
+        </div>
+        <!-- Aquí está el botón corregido -->
+        <button id="toggle-menu" class="toggle-menu-btn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+</nav>
+
+
+            <div class="dashboard-content">
+                <div class="card welcome">
+                    <h2>BIENVENIDO</h2>
+                    <p>{{name}} </p>
+                </div>
+                <div class="grid-container">
+                    <div class="card stat">
+                        <i class="fas fa-city stat-icon"></i>
+                        <div>
+        <h3 id="edificios-count">Cargando...</h3> <!-- Marcador de posición para el conteo dinámico -->
+                            <p>EDIFICIOS</p>
+                        </div>
+                    </div>
+                    <div class="card stat">
+                        <i class="fas fa-building stat-icon"></i>
+                        <div>
+        <h3 id="apartamentos-count">Cargando...</h3> <!-- Marcador de posición para el conteo dinámico -->
+                            <p>apartamentos</p>
+                        </div>
+                    </div>
+                    <div class="card stat">
+                        <i class="fas fa-users stat-icon"></i>
+                        <div>
+                            <h3>5,245</h3>
+                            <p>Users</p>
+                        </div>
+                    </div>
+                    <div class="card chart-container">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                    <div class="card chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                    <div class="card settings">
+                        <h3>Settings</h3>
+                        <canvas id="settingsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Include Chart.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+    <script>
+        // Bar Chart
+        const barCtx = document.getElementById('barChart').getContext('2d');
+        new Chart(barCtx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'],
+                datasets: [{
+                    label: 'Data Set 1',
+                    data: [45, 25, 50, 30, 55, 25, 45, 20],
+                    backgroundColor: '#1E99D3',
+                }, {
+                    label: 'Data Set 2',
+                    data: [20, 40, 30, 45, 25, 35, 20, 50],
+                    backgroundColor: '#C92458',
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Line Chart
+        const lineCtx = document.getElementById('lineChart').getContext('2d');
+        new Chart(lineCtx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'],
+                datasets: [{
+                    label: 'Data Set 1',
+                    data: [10, 20, 15, 30, 25, 20, 30, 35],
+                    borderColor: '#1E99D3',
+                    fill: false,
+                    tension: 0.1
+                }, {
+                    label: 'Data Set 2',
+                    data: [15, 25, 20, 35, 30, 25, 40, 45],
+                    borderColor: '#C92458',
+                    fill: false,
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Toggle profile dropdown menu
+        document.getElementById('profile-icon').addEventListener('click', function () {
+            var dropdown = document.getElementById('dropdown-menu');
+            dropdown.classList.toggle('show');
+        });
+
+        // Close dropdown if clicked outside
+        window.onclick = function (event) {
+            if (!event.target.matches('#profile-icon')) {
+                var dropdowns = document.getElementsByClassName("dropdown-menu");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+        
+
+
+// Toggle submenu visibility
+const menuItems = document.querySelectorAll('.menu-item');
+
+menuItems.forEach(item => {
+    item.addEventListener('click', function () {
+        // Remove active class from all menu items and hide all submenus
+        menuItems.forEach(i => {
+            const submenu = i.querySelector('.submenu');
+            if (submenu && submenu !== this.querySelector('.submenu')) {
+                submenu.classList.remove('show');
+                submenu.style.maxHeight = null;
+            }
+            i.classList.remove('active');
+        });
+
+        // Add active class to the clicked menu item
+        this.classList.add('active');
+
+        // Show or hide the submenu of the clicked item
+        const submenu = this.querySelector('.submenu');
+        if (submenu) {
+            submenu.classList.toggle('show');
+            submenu.style.maxHeight = submenu.classList.contains('show') ? submenu.scrollHeight + "px" : null;
+        }
+    });
+});
+        // Handle submenu item selection
+        const submenuItems = document.querySelectorAll('.submenu li');
+
+        submenuItems.forEach(subitem => {
+            subitem.addEventListener('click', function (e) {
+                e.stopPropagation();  // Prevent click from closing the submenu
+
+                // Remove active class from all submenu items
+                submenuItems.forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+        // Toggle sidebar visibility
+document.getElementById('toggle-menu').addEventListener('click', function () {
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    // Toggle visibility of the sidebar
+    sidebar.classList.toggle('hidden-sidebar');
+
+    // Adjust the main content width accordingly
+    if (sidebar.classList.contains('hidden-sidebar')) {
+        mainContent.classList.add('expanded-content');
+    } else {
+        mainContent.classList.remove('expanded-content');
+    }
+});
+document.addEventListener("DOMContentLoaded", function () {
+    // Fetch the edificios count from the API
+    fetch('/api/edificios-count')
+        .then(response => response.json())
+        .then(data => {
+            // Update the number in the HTML
+            document.getElementById('edificios-count').innerText = data.count;
+        })
+        .catch(error => console.error('Error fetching edificios count:', error));
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Fetch the edificios count from the API
+    fetch('/api/apartamentos-count')
+        .then(response => response.json())
+        .then(data => {
+            // Update the number in the HTML
+            document.getElementById('apartamentos-count').innerText = data.count;
+        })
+        .catch(error => console.error('Error fetching apartamentos count:', error));
+});
+
+
+
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,427 @@
+<style>
+    body {
+        background-color: #f5f5f5;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #333;
+        line-height: 1.6;
+        padding: 20px;
+    }
+    
+    .carta-container {
+        max-width: 700px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        border: 1px solid #e0e0e0;
+        position: relative;
+    }
+    
+    .carta-header {
+        text-align: center;
+        margin-bottom: 30px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 20px;
+    }
+    
+    .carta-header h2 {
+        color: #2c3e50;
+        font-size: 24px;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+    
+    .carta-header .logo {
+        font-size: 32px;
+        margin-bottom: 10px;
+        color: #3498db;
+    }
+    
+    .carta-body {
+        padding: 0 10px;
+    }
+    
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: #555;
+    }
+    
+    .form-control {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        transition: border-color 0.3s;
+    }
+    
+    .form-control:focus {
+        border-color: #3498db;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+    }
+    
+    .form-control[disabled] {
+        background-color: #f9f9f9;
+        color: #777;
+    }
+    
+    .form-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .form-section-title {
+        font-size: 18px;
+        color: #2c3e50;
+        margin-bottom: 15px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+    
+    .form-section-title i {
+        margin-right: 10px;
+        color: #3498db;
+    }
+    
+    .signature-container {
+        margin-top: 20px;
+        text-align: center;
+    }
+    
+    .signature-pad {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        margin: 10px auto;
+        background-color: #f9f9f9;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s;
+        border: none;
+        font-size: 15px;
+    }
+    
+    .btn-primary {
+        background-color: #3498db;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background-color: #2980b9;
+    }
+    
+    .btn-secondary {
+        background-color: #f8f9fa;
+        color: #555;
+        border: 1px solid #ddd;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #e9ecef;
+    }
+    
+    .form-footer {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    .date-place {
+        text-align: right;
+        font-style: italic;
+        color: #777;
+        margin-top: 30px;
+    }
+    
+    .stamp {
+        position: absolute;
+        right: 40px;
+        top: 40px;
+        opacity: 0.1;
+        font-size: 80px;
+        transform: rotate(15deg);
+        color: #e74c3c;
+    }
+    
+    @media (max-width: 768px) {
+        .carta-container {
+            padding: 25px;
+        }
+        
+        .form-footer {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+
+<div class="carta-container">
+    <div class="stamp">AUTORIZACIÓN</div>
+    
+    <div class="carta-header">
+        <div class="logo">🏢</div>
+        <h2>AUTORIZACIÓN DE INGRESO</h2>
+        <p>Conjunto Residencial "Las Gardenias"</p>
+    </div>
+    
+    <div class="carta-body">
+<form id="form-autorizacion">
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i>🧍</i> Información del Residente
+                </div>
+                
+                <div class="form-group">
+                    <label>Nombre completo del residente</label>
+                    <input type="text" class="form-control" value="{{nombreUsuario}}" >
+                </div>
+                
+                <div class="form-group">
+                    <label for="cc_residente">Número de cédula</label>
+                    <input type="text" class="form-control" id="cc_residente" name="cc_residente" required placeholder="Ingrese su número de documento">
+                </div>
+                
+                <div class="form-group">
+                    <label>Unidad residencial</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" class="form-control" style="flex: 1;" value="{{edificioSeleccionado}}" disabled>
+                        <input type="text" class="form-control" style="flex: 1;" value="{{apartamentoSeleccionado}}" disabled>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i>👤</i> Datos del Visitante
+                </div>
+                
+                <div class="form-group">
+                    <label for="nombre_visitante">Nombre completo del visitante</label>
+                    <input type="text" class="form-control" id="nombre_visitante" name="nombre_visitante" required placeholder="Nombre completo">
+                </div>
+                
+                <div class="form-group">
+                    <label for="tipo_documento_visitante">Tipo de documento</label>
+                    <select class="form-control" id="tipo_documento_visitante" name="tipo_documento_visitante" required>
+                        <option value="">Seleccione el tipo de documento</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="Pasaporte">Pasaporte</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="documento_visitante">Número de documento</label>
+                    <input type="text" class="form-control" id="documento_visitante" name="documento_visitante" required placeholder="Número de documento">
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i>📅</i> Fechas y Horarios
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label for="fecha_inicio">Fecha de ingreso</label>
+                        <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="fecha_fin">Fecha de salida</label>
+                        <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hora_inicio">Hora de ingreso</label>
+                        <input type="time" class="form-control" id="hora_inicio" name="hora_inicio" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hora_fin">Hora de salida</label>
+                        <input type="time" class="form-control" id="hora_fin" name="hora_fin" required>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i>📝</i> Motivo de la Visita
+                </div>
+                
+                <div class="form-group">
+                    <label for="motivo">Descripción del motivo</label>
+                    <textarea class="form-control" id="motivo" name="motivo" rows="3" required placeholder="Describa el motivo de la visita..."></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="form-section-title">
+                    <i>✍️</i> Firma del Residente
+                </div>
+                
+                <div class="signature-container">
+                    <p>Por favor, firme en el recuadro inferior:</p>
+                    <canvas id="firma" class="signature-pad" width="500" height="150"></canvas>
+                    <input type="hidden" name="firma_digital" id="firma_digital">
+                    <button type="button" class="btn btn-secondary" onclick="limpiarFirma()" style="margin-top: 10px;">
+                        Limpiar Firma
+                    </button>
+                </div>
+            </div>
+            
+            <div class="date-place">
+                <p>{{fechaActual}}, {{ciudad}}</p>
+            </div>
+            
+            <div class="form-footer">
+                <button type="submit" class="btn btn-primary">
+                    Enviar Autorización
+                </button>
+                <a href="/" class="btn btn-secondary">
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+let canvas = document.getElementById("firma");
+let ctx = canvas.getContext("2d");
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+
+// Ajustar canvas para pantallas HD
+canvas.style.width = '100%';
+canvas.style.height = '150px';
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+
+// Estilo de la firma
+ctx.strokeStyle = '#2c3e50';
+ctx.lineWidth = 2;
+ctx.lineCap = 'round';
+ctx.lineJoin = 'round';
+
+// Eventos para mouse
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseout', stopDrawing);
+
+// Eventos para pantallas táctiles
+canvas.addEventListener('touchstart', handleTouchStart);
+canvas.addEventListener('touchmove', handleTouchMove);
+canvas.addEventListener('touchend', stopDrawing);
+
+function startDrawing(e) {
+    isDrawing = true;
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function draw(e) {
+    if (!isDrawing) return;
+    
+    ctx.beginPath();
+    ctx.moveTo(lastX, lastY);
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    
+    [lastX, lastY] = [e.offsetX, e.offsetY];
+}
+
+function stopDrawing() {
+    isDrawing = false;
+}
+
+function handleTouchStart(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent('mousedown', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    });
+    canvas.dispatchEvent(mouseEvent);
+}
+
+function handleTouchMove(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    const mouseEvent = new MouseEvent('mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    });
+    canvas.dispatchEvent(mouseEvent);
+}
+
+function limpiarFirma() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function firmarFormulario() {
+    if (isCanvasBlank(canvas)) {
+        alert('Por favor, proporcione su firma antes de enviar el formulario.');
+        return false;
+    }
+    
+    const firmaBase64 = canvas.toDataURL();
+    document.getElementById('firma_digital').value = firmaBase64;
+    return true;
+}
+
+function isCanvasBlank(canvas) {
+    const blank = document.createElement('canvas');
+    blank.width = canvas.width;
+    blank.height = canvas.height;
+    return canvas.toDataURL() === blank.toDataURL();
+}
+</script><script>
+    // Mantén aquí tu código de firma...
+
+    document.getElementById('form-autorizacion').addEventListener('submit', function(e) {
+        e.preventDefault(); // Evita que el formulario se envíe inmediatamente
+
+        // Aquí podrías agregar validación de firma o datos si lo deseas
+
+        alert('✅ Recibimos tu autorización.');
+
+        // Puedes hacer un POST manual con fetch, o enviar el formulario después del alert:
+        // Este ejemplo usa envío normal tras el mensaje
+        setTimeout(() => {
+            this.submit(); // Ahora sí enviamos el formulario
+            // Y recargamos después de un momento (opcional)
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }, 100);
+    });
+
+    function firmarFormulario() {
+        const firmaData = canvas.toDataURL();
+        document.getElementById("firma_digital").value = firmaData;
+        return true; // Ya no se usa directamente, pero por si lo necesitas
+    }
+
+    function limpiarFirma() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+</script>

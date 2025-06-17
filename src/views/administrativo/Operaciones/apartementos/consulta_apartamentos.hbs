@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Apartamentos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            margin: 0;
+            padding: 0;
+            color: #413d4b;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .search-container, .results-container {
+            width: 100%;
+            padding: 20px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .search-container h2 {
+            text-align: center;
+            color: #1E99D3;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .search-container select, .search-container button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container i {
+            margin-right: 8px;
+            color: #1E99D3;
+        }
+
+        .apartamento-detalles {
+            display: none;
+            margin-top: 20px;
+            position: relative;
+        }
+
+        .apartamento-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .apartamento-detalles img {
+            width: 100%;
+            max-width: 150px;
+            height: auto;
+            border-radius: 50%;
+            object-fit: cover;
+            position: relative;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .edit-button {
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #1E99D3;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #C92458;
+        }
+
+        .icon-input {
+            border: 1px solid black;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 5px;
+            color: #fff;
+            margin: 10px 0;
+        }
+
+        .icon-input select {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 1em;
+            padding: 10px;
+            color: #413d4b;
+            background-color: transparent;
+        }
+
+        /* Media Query for Mobile Devices */
+        @media (min-width: 768px) {
+            .container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .search-container {
+                width: 30%;
+            }
+
+            .results-container {
+                width: 65%;
+                padding: 20px;
+                background-color: #fff;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <h2><i class="fas fa-search"></i> Buscar Apartamentos</h2>
+            <div class="icon-input">
+                <i class="fas fa-building"></i>
+                <select id="edificioSelect" class="select-edificio">
+                    <option value="" disabled selected>Seleccione un edificio</option>
+                </select>
+            </div>
+            <div class="icon-input" style="display: none;" id="apartamentoContainer">
+                <i class="fas fa-door-closed"></i>
+                <select id="apartamentoSelect" class="select-apartamento">
+                    <option value="" disabled selected>Seleccione un apartamento</option>
+                </select>
+            </div>
+        </div>
+        <div class="results-container">
+            <div id="apartamentoDetalles" class="apartamento-detalles"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Obtener edificios al cargar la página
+            fetch('/getEdificios')
+                .then(response => response.json())
+                .then(data => {
+                    const edificioSelect = document.getElementById('edificioSelect');
+                    data.edificios.forEach(edificio => {
+                        const option = document.createElement('option');
+                        option.value = edificio.id;
+                        option.textContent = edificio.nombre;
+                        edificioSelect.appendChild(option);
+                    });
+                });
+
+            // Manejar selección de edificio
+            document.getElementById('edificioSelect').addEventListener('change', function() {
+                const edificioId = this.value;
+                const apartamentoSelect = document.getElementById('apartamentoSelect');
+                const apartamentoContainer = document.getElementById('apartamentoContainer');
+                apartamentoContainer.style.display = 'none';
+                apartamentoSelect.innerHTML = '<option value="" disabled selected>Seleccione un apartamento</option>';
+                document.getElementById('apartamentoDetalles').style.display = 'none';
+
+                fetch(`/getApartamentos?edificioId=${edificioId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.apartamentos.length > 0) {
+                            apartamentoContainer.style.display = 'block';
+                            data.apartamentos.forEach(apartamento => {
+                                const option = document.createElement('option');
+                                option.value = apartamento.id;
+                                option.textContent = `APARTAMENTO N°: ${apartamento.numero}`;
+                                apartamentoSelect.appendChild(option);
+                            });
+                        }
+                    });
+            });
+
+            // Manejar selección de apartamento
+            document.getElementById('apartamentoSelect').addEventListener('change', function() {
+                const apartamentoId = this.value;
+
+                fetch(`/getApartamentoDetalles?apartamentoId=${apartamentoId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const detallesDiv = document.getElementById('apartamentoDetalles');
+                        detallesDiv.style.display = 'block';
+                        detallesDiv.innerHTML = `
+                            <h2>Detalles del Apartamento</h2>
+                            ${data.apartamento.foto ? `<img src="data:image/jpeg;base64,${data.apartamento.foto}" alt="Foto del apartamento">` : ''}
+                            <p><strong>Número:</strong> ${data.apartamento.numero}</p>
+                            <p><strong>Piso:</strong> ${data.apartamento.piso}</p>
+                            <p><strong>Responsable:</strong> ${data.apartamento.responsable}</p>
+                            <p><strong>Celular:</strong> ${data.apartamento.celular}</p>
+                            <p><strong>Correo:</strong> ${data.apartamento.correo}</p>
+                            <br>
+                            <a href="/editar_apartamento?apartamentoId=${data.apartamento.id}" class="edit-button">Editar Apartamento <i class="fas fa-edit"></i></a>
+                        `;
+                    });
+            });
+        });
+    </script>
+        <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+</script>
+
+</body>
+</html>

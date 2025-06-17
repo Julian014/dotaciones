@@ -1,0 +1,2 @@
+C:/Users/User/Desktop/cerce/Cerceta/vianco_app/android/app/.cxx/Debug/32i1t59s/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/User/Desktop/cerce/Cerceta/vianco_app/android/app/.cxx/Debug/32i1t59s/armeabi-v7a/CMakeFiles/rebuild_cache.dir

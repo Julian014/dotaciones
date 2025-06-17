@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Comunicado General</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+<style>
+  /* General Reset */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #007bff;
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .form-control,
+  .form-control-file {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #0056b3;
+  }
+
+  #dropzone {
+    margin-top: 10px;
+    padding: 15px;
+    border: 2px dashed #007bff;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #f0f8ff;
+    cursor: pointer;
+  }
+
+  #dropzone.dragover {
+    background-color: #e0f7ff;
+  }
+
+  .file-list {
+    list-style: none;
+    margin-top: 10px;
+  }
+
+  .file-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+
+  .file-list button {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+  }
+
+  .file-list button:hover {
+    background-color: #bd2130;
+  }
+
+  #loadingIndicator {
+    display: none;
+    text-align: center;
+    color: #007bff;
+    margin-top: 10px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .container {
+      padding: 15px;
+    }
+
+    button {
+      font-size: 14px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    h2 {
+      font-size: 18px;
+    }
+  }
+  body.dark-mode {
+  color: black; /* Texto claro para contraste */
+}
+</style>
+
+    <div class="container">
+        <h2>Enviar Comunicado General</h2>
+        <form action="/enviarComunicado" method="POST" enctype="multipart/form-data" id="comunicadoForm">
+            <div class="form-group">
+                <label for="edificios">Seleccione los edificios:</label>
+                <select id="edificios" name="edificiosSeleccionados[]" multiple="multiple" class="form-control" style="width: 100%;">
+                    <option value="all">Todos</option>
+                    {{#each edificios}}
+                        <option value="{{this.id}}">{{this.nombre}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+<div class="form-group">
+    <label for="asunto">Asunto:</label>
+    <input type="text" id="asunto" name="asunto" class="form-control" placeholder="Ingrese el asunto del comunicado" required>
+</div>
+
+
+            
+            <div class="form-group">
+                <label for="mensaje">Mensaje:</label>
+                <textarea name="mensaje" id="mensaje" rows="4" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="archivos">Adjuntar Fotos y PDFs:</label>
+                <input type="file" id="archivos" class="form-control-file" multiple>
+                <div id="dropzone" class="dropzone">Arrastra y suelta los archivos aquí o haz clic para seleccionarlos</div>
+                <ul id="fileList" class="file-list"></ul>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar Comunicado</button>
+        </form>
+        <div id="loadingIndicator">Enviando...</div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#edificios').select2({
+                placeholder: 'Seleccione los edificios',
+                allowClear: true
+            });
+
+            $('#edificios').on('change', function() {
+                if ($(this).val().includes('all')) {
+                    $(this).find('option').not(':first').prop('selected', true).trigger('change');
+                }
+            });
+
+            const fileInput = document.getElementById('archivos');
+            const dropzone = document.getElementById('dropzone');
+            const fileList = document.getElementById('fileList');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            let filesArray = [];
+
+            fileInput.addEventListener('change', function(event) {
+                handleFiles(fileInput.files);
+                fileInput.value = '';
+            });
+
+            dropzone.addEventListener('dragover', function(event) {
+                event.preventDefault();
+                dropzone.classList.add('dragover');
+            });
+
+            dropzone.addEventListener('dragleave', function(event) {
+                dropzone.classList.remove('dragover');
+            });
+
+            dropzone.addEventListener('drop', function(event) {
+                event.preventDefault();
+                dropzone.classList.remove('dragover');
+                handleFiles(event.dataTransfer.files);
+            });
+
+            dropzone.addEventListener('click', function() {
+                fileInput.click();
+            });
+
+            function handleFiles(files) {
+                for (let i = 0; i < files.length; i++) {
+                    filesArray.push(files[i]);
+                }
+                renderFileList();
+            }
+
+            function renderFileList() {
+                fileList.innerHTML = '';
+                filesArray.forEach((file, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = file.name;
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = 'X';
+                    removeButton.setAttribute('data-index', index);
+                    removeButton.addEventListener('click', function() {
+                        const fileIndex = parseInt(this.getAttribute('data-index'));
+                        filesArray.splice(fileIndex, 1);
+                        renderFileList();
+                    });
+                    listItem.appendChild(removeButton);
+                    fileList.appendChild(listItem);
+                });
+            }
+
+            $('#comunicadoForm').on('submit', function(event) {
+                event.preventDefault();
+                loadingIndicator.style.display = 'block';
+                const formData = new FormData(this);
+                filesArray.forEach(file => {
+                    formData.append('archivos', file);
+                });
+
+                $.ajax({
+                    url: this.action,
+                    method: this.method,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        alert('Comunicado enviado correctamente.');
+                        loadingIndicator.style.display = 'none';
+                        location.reload();
+                    },
+                    error: function(error) {
+                        alert('Error al enviar el comunicado.');
+                        loadingIndicator.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+        <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+</script>
+
+</body>
+</html>

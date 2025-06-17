@@ -1,0 +1,214 @@
+{{!-- views/inventarios/ver.hbs --}}
+<div class="container mx-auto py-12 px-4">
+  <!-- Título -->
+  <h1 class="text-4xl font-bold text-gray-800 mb-8">Inventario por Categoría</h1>
+
+  <!-- Filtros de Búsqueda -->
+  <div class="flex flex-wrap items-center gap-4 mb-8">
+    <input id="search-name" type="text" placeholder="Buscar por nombre o descripción"
+           class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring" />
+    <input id="filter-min-price" type="number" placeholder="Precio mínimo"
+           class="w-32 px-4 py-2 border rounded-lg focus:outline-none focus:ring" />
+    <input id="filter-max-price" type="number" placeholder="Precio máximo"
+           class="w-32 px-4 py-2 border rounded-lg focus:outline-none focus:ring" />
+    <select id="filter-size" class="px-4 py-2 border rounded-lg focus:outline-none focus:ring">
+      <option value="all">Todas las tallas</option>
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+      <option value="XL">XL</option>
+    </select>
+    <button id="clear-filters" class="px-4 py-2 bg-gray-300 rounded-lg hover:bg-gray-400 transition">
+      Limpiar filtros
+    </button>
+  </div>
+
+  <!-- Pestañas de Categorías -->
+  <div class="flex space-x-4 overflow-x-auto mb-10">
+    {{#each categorias}}
+      <button
+        type="button"
+        data-category="{{@index}}"
+        class="category-tab px-6 py-2 rounded-full text-gray-600 bg-white shadow-sm 
+               hover:shadow-lg hover:bg-indigo-50 focus:outline-none transition duration-300"
+      >
+        {{nombre}}
+      </button>
+    {{/each}}
+  </div>
+
+  <!-- Secciones de Productos -->
+  {{#each categorias}}
+    <section id="cat-{{@index}}" class="category-section hidden space-y-10">
+      <h2 class="text-3xl font-semibold text-gray-700 mb-6">{{nombre}}</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {{#each productos}}
+          <div class="product-card group bg-white rounded-3xl overflow-hidden shadow-md 
+                      hover:shadow-2xl transform hover:scale-105 transition duration-300 
+                      flex flex-col"
+               data-name="{{nombre}} {{descripcion}}"
+               data-price="{{precio}}"
+               data-sizes="{{#each tallas}}{{nombre}}{{#unless @last}},{{/unless}}{{/each}}">
+            <!-- Imagen o placeholder -->
+            <div class="relative h-48 w-full">
+              {{#if imagenes.[0]}}
+                <img
+                  src="{{imagenes.[0].ruta}}"
+                  alt="{{imagenes.[0].nombre}}"
+                  class="object-cover w-full h-full"
+                />
+              {{else}}
+                <div class="bg-gray-100 w-full h-full flex items-center justify-center">
+                  <span class="text-gray-400">Sin Imagen</span>
+                </div>
+              {{/if}}
+            </div>
+            <!-- Contenido -->
+            <div class="p-6 flex-1 flex flex-col">
+              <h3 class="text-xl font-medium text-gray-800 mb-2 truncate group-hover:text-indigo-600">{{nombre}}</h3>
+              <p class="text-sm text-gray-500 mb-4 flex-1">{{descripcion}}</p>
+              <p class="text-lg font-semibold text-gray-800 mb-4">$ {{precio}}</p>
+              <button
+                onclick="openModal('{{id}}')"
+                class="mt-auto text-center bg-indigo-600 text-white px-4 py-2 rounded-full 
+                       hover:bg-indigo-700 focus:outline-none transition duration-300"
+              >
+                Ver detalles
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal de Detalles -->
+          <div
+            id="modal-{{id}}"
+            class="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm 
+                   flex items-center justify-center p-4 hidden"
+          >
+            <div class="bg-white w-full max-w-2xl p-8 rounded-2xl relative overflow-y-auto max-h-[90vh]">
+              <button
+                onclick="closeModal('{{id}}')"
+                class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 focus:outline-none"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">{{nombre}}</h3>
+              <p class="text-gray-600 mb-6">{{descripcion}}</p>
+
+              <h4 class="font-semibold text-gray-700 mb-2">Tallas</h4>
+              <ul class="list-disc list-inside mb-6 space-y-1">
+                {{#each tallas}}
+                  <li>{{nombre}} – Cant: {{cantidad}} – Precio: ${{precio}}</li>
+                {{/each}}
+              </ul>
+
+              <h4 class="font-semibold text-gray-700 mb-2">Imágenes</h4>
+              <div class="flex space-x-4 overflow-x-auto">
+                {{#each imagenes}}
+                  <img
+                    src="{{ruta}}"
+                    alt="{{nombre}}"
+                    class="h-24 w-auto rounded-lg object-cover shadow-sm cursor-zoom-in"
+                    onclick="openLightbox('{{ruta}}')"
+                  />
+                {{/each}}
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </section>
+  {{/each}}
+</div>
+
+<!-- Lightbox (overlay de imagen ampliada) -->
+<div
+  id="lightbox"
+  class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden"
+  onclick="closeLightbox()"
+>
+  <img id="lightbox-img" src="" alt="Imagen ampliada"
+       class="max-w-[90vw] max-h-[90vh] rounded-2xl shadow-lg object-contain"/>
+</div>
+
+<script>
+  // Elementos de filtro
+  const searchInput = document.getElementById('search-name');
+  const minPrice = document.getElementById('filter-min-price');
+  const maxPrice = document.getElementById('filter-max-price');
+  const sizeFilter = document.getElementById('filter-size');
+  const clearBtn = document.getElementById('clear-filters');
+
+  // Aplica filtros SOLO a la sección visible
+  function applyFilters() {
+    const text = searchInput.value.trim().toLowerCase();
+    const min = parseFloat(minPrice.value) || 0;
+    const max = parseFloat(maxPrice.value) || Infinity;
+    const size = sizeFilter.value;
+
+    // Selecciona solo product-cards dentro de la sección activa
+    const visibleSection = document.querySelector('.category-section:not(.hidden)');
+    if (!visibleSection) return;
+    visibleSection.querySelectorAll('.product-card').forEach(card => {
+      const nameDesc = card.dataset.name.toLowerCase();
+      const price = parseFloat(card.dataset.price);
+      const sizes = card.dataset.sizes.split(',');
+      const matchesText = nameDesc.includes(text);
+      const matchesPrice = price >= min && price <= max;
+      const matchesSize = (size === 'all') || sizes.includes(size);
+
+      if (matchesText && matchesPrice && matchesSize) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  // Asigna eventos de filtro
+  [searchInput, minPrice, maxPrice, sizeFilter].forEach(el =>
+    el.addEventListener('input', applyFilters)
+  );
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    minPrice.value = '';
+    maxPrice.value = '';
+    sizeFilter.value = 'all';
+    applyFilters();
+  });
+
+  // Control de pestañas
+  const tabs = document.querySelectorAll('.category-tab');
+  const sections = document.querySelectorAll('.category-section');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.replace('bg-indigo-500','bg-white') || t.classList.replace('text-white','text-gray-600'));
+      sections.forEach(sec => sec.classList.add('hidden'));
+      const idx = tab.dataset.category;
+      document.getElementById(`cat-${idx}`).classList.remove('hidden');
+      tab.classList.replace('bg-white','bg-indigo-500');
+      tab.classList.replace('text-gray-600','text-white');
+      applyFilters();
+    });
+  });
+  // Mostrar primera categoría y aplicar filtros iniciales
+  if (tabs.length) {
+    tabs[0].click();
+  }
+
+  // Modales
+  window.openModal = id => document.getElementById(`modal-${id}`).classList.remove('hidden');
+  window.closeModal = id => document.getElementById(`modal-${id}`).classList.add('hidden');
+
+  // Lightbox
+  window.openLightbox = src => {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    img.src = src;
+    lb.classList.remove('hidden');
+  };
+  window.closeLightbox = () => document.getElementById('lightbox').classList.add('hidden');
+</script>

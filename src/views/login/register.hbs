@@ -1,0 +1,27 @@
+<div class="mx-auto my-8 p-8 bg-white sm:w-2/3 md:w-1/2 lg:w-1/3 xl:w-1/3 border border-gray-200 rounded-lg shadow-lg hover:shadow-xl">
+    <!-- Contenedor principal con estilos de Tailwind CSS y efecto de sombra al hacer hover -->
+
+    <h1 class="text-3xl md:text-4xl lg:text-5xl text-center mb-6 text-gray-800 font-semibold">Registrarse</h1>
+    <!-- Encabezado centrado con texto grande, negrita y color gris oscuro -->
+
+    <form action="/storeUser" method="post" class="space-y-4">
+        <!-- Formulario con espacio entre elementos -->
+
+        <input type="text" name="name" placeholder="Nombre de usuario" class="border border-gray-300 focus:border-green-500 w-full text-lg placeholder-gray-500 p-3 bg-gray-100 rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+        <!-- Campo de entrada de texto para el nombre de usuario con estilos, marcador de posición, bordes y transiciones -->
+
+        <input type="email" name="email" placeholder="Correo electrónico" class="border border-gray-300 focus:border-green-500 w-full text-lg placeholder-gray-500 p-3 bg-gray-100 rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+        <!-- Campo de entrada de correo electrónico con estilos, marcador de posición, bordes y transiciones -->
+
+        <input type="password" name="password" placeholder="Contraseña" class="border border-gray-300 focus:border-green-500 w-full text-lg placeholder-gray-500 p-3 bg-gray-100 rounded-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500" required>
+        <!-- Campo de entrada de contraseña con estilos, marcador de posición, bordes y transiciones -->
+
+        <button type="submit" class="bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-500 text-white text-lg font-semibold p-3 rounded-md transition-all duration-300">Registrarse</button>
+        <!-- Botón de envío con color de fondo verde, texto blanco, estilos, bordes redondeados y transiciones -->
+    </form>
+
+    {{#if error}}
+    <p class="text-red-500 font-semibold text-lg my-3">{{error}}</p>
+    <!-- Mensaje de error en caso de que haya un error -->
+    {{/if}}
+</div>

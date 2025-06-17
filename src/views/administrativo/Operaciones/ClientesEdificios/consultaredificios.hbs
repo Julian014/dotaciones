@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Consultar Edificios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1E99D3;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #1E99D3;
+            padding-bottom: 10px;
+        }
+
+        .input-container {
+            margin-bottom: 20px;
+        }
+
+        .input-container input,
+        .select-edificio {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s;
+            box-sizing: border-box;
+        }
+
+        .input-container input:focus,
+        .select-edificio:focus {
+            border-color: #1E99D3;
+            outline: none;
+        }
+
+        .edificio-detalles {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .edificio {
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .edificio:hover {
+            transform: translateY(-5px);
+        }
+
+        .edificio h2 {
+            color: #C92458;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .edificio h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: #C92458;
+            margin-top: 5px;
+        }
+
+        .info-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .info-item:last-child {
+            margin-right: 0;
+        }
+
+        .field {
+            margin-bottom: 15px;
+        }
+
+        .field label {
+            font-weight: bold;
+            color: #413d4b;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .field span {
+            display: block;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .foto-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .foto {
+            width: 200px;
+            margin-left: 20px;
+            display: block;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .highlight {
+            background-color: #EFA325;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .apartamentos {
+            margin-top: 20px;
+        }
+
+        .apartamento-item {
+            border-bottom: 1px solid #ddd;
+            padding: 10px 0;
+        }
+
+        .edit-button {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            background-color: #7CB646;
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .edit-button:hover {
+            background-color: #C92458;
+        }
+
+        /* Estilos adicionales */
+        .nav-bar {
+            background-color: #1E99D3;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-bar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .nav-bar a:hover {
+            color: #C92458;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .button-container button {
+            background-color: #1E99D3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button-container button:hover {
+            background-color: #C92458;
+        }
+        .highlight {
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 10px;
+    color: #333;
+    margin-top: 20px;
+}
+
+.highlight h3 {
+    color: #1E99D3;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.info-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.member-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 200px;
+}
+
+.member-card h4 {
+    color: #413d4b;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.member-card p {
+    font-size: 0.95em;
+    color: #555;
+}
+
+.member-card a {
+    color: #1E99D3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.member-card a:hover {
+    color: #C92458;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+        <h1>Consultar Edificios <i class="fas fa-city"></i></h1>
+        <div class="input-container">
+            <input type="text" id="filterInput" placeholder="Escriba para filtrar edificios">
+        </div>
+        <select id="edificioSelect" class="select-edificio">
+            <option value="" disabled selected>Seleccione un edificio</option>
+            {{#each edificios}}
+                <option value="{{this.id}}">{{this.nombre}}</option>
+            {{/each}}
+        </select>
+        <div class="button-container">
+            <button id="verApartamentosBtn">Ver Apartamentos <i class="fas fa-building"></i></button>
+        </div>
+        <div id="apartamentos" class="apartamentos"></div>
+        {{#each edificios}}
+        <div class="edificio-detalles" id="edificio-{{this.id}}">
+            <div class="edificio">
+                <h2>{{this.nombre}} <i class="fas fa-home"></i></h2>
+                <div class="info-container">
+                    <div class="info-item">
+                        <div class="field">
+                            <label><i class="fas fa-calendar-alt"></i> Fecha de Inicio:</label>
+                            <span class="fecha-inicio">{{this.fechaincio}}</span>
+                        </div>
+                        <div class="field">
+                            <label><i class="fas fa-user"></i> Nombre Representante Legal:</label>
+                            <span>{{this.nombre_representante_legal}}</span>
+                        </div>
+                    </div>
+                    <div class="foto-container">
+                        {{#if this.foto}}
+                        <img src="data:image/jpeg;base64,{{this.foto}}" alt="Foto del edificio" class="foto">
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-id-card"></i> NIT:</label>
+                    <span>{{this.nit}}</span>
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-id-badge"></i> Cédula Representante Legal:</label>
+                    <span>{{this.cedula_representante_legal}}</span>
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-map-marker-alt"></i> Dirección:</label>
+                    <span>{{this.direccion}}</span>
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-envelope"></i> Correo Administrativo:</label>
+                    <span>{{this.correorepresentante}}</span>
+                </div>
+                <div class="field">
+                    <label><i class="fas fa-phone"></i> Teléfono:</label>
+                    <span>{{this.telefono}}</span>
+                </div>
+                <div class="highlight">
+                    <h3>MIEMBROS DEL CONSEJO <i class="fas fa-users"></i></h3>
+                    <div class="info-container">
+                        <div class="info-item">
+                            <div class="member-card">
+                                <h4>Miembro 1 <i class="fas fa-user"></i></h4>
+                                <p><strong>Nombre:</strong> {{this.miembro1_nombre}}</p>
+                                <p><strong>Dirección:</strong> {{this.miembro1_direccion}}</p>
+                                <p><strong>Correo:</strong> <a href="mailto:{{this.miembro1_correo}}">{{this.miembro1_correo}}</a></p>
+                                <p><strong>Teléfono:</strong> {{this.miembro1_telefono}}</p>
+                            </div>
+        </div>
+        <div class="info-item">
+            <div class="member-card">
+                <h4>Miembro 2  <i class="fas fa-user"></i></h4>
+                <p><strong>Nombre:</strong> {{this.miembro2_nombre}}</p>
+                <p><strong>Dirección:</strong> {{this.miembro2_direccion}}</p>
+                <p><strong>Correo:</strong> <a href="mailto:{{this.miembro2_correo}}">{{this.miembro2_correo}}</a></p>
+                <p><strong>Teléfono:</strong> {{this.miembro2_telefono}}</p>
+            </div>
+        </div>
+        <div class="info-item">
+            <div class="member-card">
+                <h4>Miembro 3  <i class="fas fa-user"></i></h4>
+                <p><strong>Nombre:</strong> {{this.miembro3_nombre}}</p>
+                <p><strong>Dirección:</strong> {{this.miembro3_direccion}}</p>
+                <p><strong>Correo:</strong> <a href="mailto:{{this.miembro3_correo}}">{{this.miembro3_correo}}</a></p>
+                <p><strong>Teléfono:</strong> {{this.miembro3_telefono}}</p>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="highlight">
+    <h3>MIEMBROS DEL COMITE <i class="fas fa-users"></i></h3>
+    <div class="info-container">
+        <!-- Miembro 1 -->
+        <div class="info-item">
+            <div class="member-card">
+                <h4>Miembro 1 <i class="fas fa-user"></i></h4>
+                <p><strong>Nombre:</strong> {{this.miembro_comite1_nombre}}</p>
+                <p><strong>Cédula:</strong> {{this.miembro_comite1_cedula}}</p>
+                <p><strong>Celular:</strong> {{this.miembro_comite1_celular}}</p>
+                <p><strong>Correo:</strong> <a href="mailto:{{this.miembro_comite1_correo}}">{{this.miembro_comite1_correo}}</a></p>
+            </div>
+        </div>
+
+        <!-- Miembro 2 -->
+        <div class="info-item">
+            <div class="member-card">
+                <h4>Miembro 2 <i class="fas fa-user"></i></h4>
+                <p><strong>Nombre:</strong> {{this.miembro_comite2_nombre}}</p>
+                <p><strong>Cédula:</strong> {{this.miembro_comite2_cedula}}</p>
+                <p><strong>Celular:</strong> {{this.miembro_comite2_celular}}</p>
+                <p><strong>Correo:</strong> <a href="mailto:{{this.miembro_comite2_correo}}">{{this.miembro_comite2_correo}}</a></p>
+            </div>
+        </div>
+
+        <!-- Miembro 3 -->
+        <div class="info-item">
+            <div class="member-card">
+                <h4>Miembro 3 <i class="fas fa-user"></i></h4>
+                <p><strong>Nombre:</strong> {{this.miembro_comite3_nombre}}</p>
+                <p><strong>Cédula:</strong> {{this.miembro_comite3_cedula}}</p>
+                <p><strong>Celular:</strong> {{this.miembro_comite3_celular}}</p>
+                <p><strong>Correo:</strong> <a href="mailto:{{this.miembro_comite3_correo}}">{{this.miembro_comite3_correo}}</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <a href="/editar_edificio?edificioId={{this.id}}" class="edit-button">Editar Edificio <i class="fas fa-edit"></i></a>
+                <a href="/editar_miembros_consejo?edificioId={{this.id}}" class="edit-button">Editar Miembros del Consejo <i class="fas fa-edit"></i></a>
+           <a href="/editar_miembros_comite?edificioId={{this.id}}" class="edit-button">Editar Miembros del Comité <i class="fas fa-edit"></i></a>
+
+            </div>
+        </div>
+        {{/each}}
+    </div>
+
+    <script>
+        function formatFecha(fecha) {
+            const options = { day: '2-digit', month: 'long', year: 'numeric' };
+            const date = new Date(fecha);
+            return isNaN(date) ? fecha : date.toLocaleDateString('es-ES', options);
+        }
+
+        function formatVisibleFechas() {
+            var fechas = document.querySelectorAll('.edificio-detalles:not([style*="display: none"]) .fecha-inicio');
+            fechas.forEach(function(fecha) {
+                fecha.textContent = formatFecha(fecha.getAttribute('data-raw'));
+            });
+        }
+
+        document.getElementById('edificioSelect').addEventListener('change', function() {
+            var selectedId = this.value;
+            var detalles = document.querySelectorAll('.edificio-detalles');
+            detalles.forEach(function(detalle) {
+                detalle.style.display = 'none';
+            });
+            var selectedDetalle = document.getElementById('edificio-' + selectedId);
+            if (selectedDetalle) {
+                selectedDetalle.style.display = 'block';
+                // Formatear fechas visibles
+                formatVisibleFechas();
+            }
+
+            // Mostrar el botón de ver apartamentos
+            document.getElementById('verApartamentosBtn').style.display = 'block';
+        });
+
+        // Guardar las fechas en data-raw inicialmente
+        document.addEventListener('DOMContentLoaded', function() {
+            var fechas = document.querySelectorAll('.fecha-inicio');
+            fechas.forEach(function(fecha) {
+                fecha.setAttribute('data-raw', fecha.textContent);
+            });
+
+            // Mostrar el detalle del edificio seleccionado por defecto
+            var selectedId = document.getElementById('edificioSelect').value;
+            if (selectedId) {
+                var selectedDetalle = document.getElementById('edificio-' + selectedId);
+                selectedDetalle.style.display = 'block';
+
+                // Formatear fechas visibles
+                formatVisibleFechas();
+            }
+        });
+
+        document.getElementById('filterInput').addEventListener('keyup', function() {
+            var filter = this.value.toLowerCase();
+            var select = document.getElementById('edificioSelect');
+            var options = select.getElementsByTagName('option');
+
+            for (var i = 1; i < options.length; i++) { // Start at 1 to skip the disabled "Seleccione un edificio" option
+                var option = options[i];
+                var text = option.textContent.toLowerCase();
+                if (text.indexOf(filter) > -1) {
+                    option.style.display = '';
+                } else {
+                    option.style.display = 'none';
+                }
+            }
+        });
+
+        document.getElementById('verApartamentosBtn').addEventListener('click', function() {
+            var selectedId = document.getElementById('edificioSelect').value;
+            if (selectedId) {
+                fetch('/getApartamentos?edificioId=' + selectedId)
+                    .then(response => response.json())
+                    .then(data => {
+                        var apartamentosDiv = document.getElementById('apartamentos');
+                        apartamentosDiv.innerHTML = '<h3>Apartamentos</h3>';
+                        if (data.apartamentos.length > 0) {
+                            data.apartamentos.sort((a, b) => a.numero.localeCompare(b.numero)); // Ordenar por número de apartamento
+                            data.apartamentos.forEach(apartamento => {
+                                apartamentosDiv.innerHTML += '<div class="apartamento-item">' +
+                                    '<p>APARTAMENTO N°: ' + apartamento.numero + '</p>' +
+                                    '<p>Piso: ' + apartamento.piso + '</p>' +
+                                    '<p>PROPIETARIO: ' + apartamento.responsable + '</p>' +
+                                    '</div>';
+                            });
+                        } else {
+                            apartamentosDiv.innerHTML += '<p>No hay apartamentos en este edificio.</p>';
+                        }
+                    });
+            }
+        });
+    </script>
+        <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
+
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
+      });
+    } else {
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
+    }
+  });
+</script>
+
+</body>
+</html>

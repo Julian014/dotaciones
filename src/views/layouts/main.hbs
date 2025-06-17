@@ -1,0 +1,349 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compact Sidebar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    /* Estilo para el estado reducido del menú */
+    #sidebar {
+      width: 256px; /* Ancho predeterminado del menú */
+      transition: width 0.3s ease;
+    }
+    #sidebar.collapsed {
+      width: 60px; /* Ancho reducido del menú */
+    }
+    /* Oculta textos y otros elementos al colapsar */
+    #sidebar.collapsed .menu-text,
+    #sidebar.collapsed .search-bar,
+    #sidebar.collapsed .logo-text {
+      display: none;
+    }
+    /* Centra los íconos en el estado colapsado */
+    #sidebar.collapsed nav a {
+      justify-content: center;
+    }
+    #sidebar.collapsed nav a i {
+      margin: 0;
+    }
+    /* Ajusta el toggle al modo compacto */
+    #toggle-button {
+      transition: transform 0.3s ease;
+    }
+    #sidebar.collapsed #toggle-button {
+      transform: rotate(180deg);
+    }
+
+    /* Estilos para el modo oscuro */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    body.dark-mode #sidebar {
+      background-color: #333;
+    }
+
+    body.dark-mode .menu-text {
+      color: #ffffff;
+    }
+
+    body.dark-mode .text-gray-600 {
+      color: #cccccc;
+    }
+
+    .dark-mode .bg-gray-300 {
+      background-color: #666;
+    }
+
+    .dark-mode .bg-indigo-600 {
+      background-color: #6200ea;
+    }
+
+    .dark-mode .bg-indigo-600:hover {
+      background-color: #3700b3;
+    }
+
+    .dark-mode .text-gray-400 {
+      color: #999999;
+    }
+
+    /* Estilo del interruptor de modo oscuro */
+    .dark-mode-toggle {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 9999px;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode-toggle .dot {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    input:checked + .dark-mode-toggle {
+      background-color: #4ade80;
+    }
+
+    input:checked + .dark-mode-toggle .dot {
+      transform: translateX(20px);
+    }
+
+    /* Ocultar íconos y texto en modo compacto */
+    #sidebar.collapsed .dark-mode-content i {
+      display: none;
+    }
+
+    /* Centrar el contenido de dark-mode-content al reducir el menú */
+    #sidebar.collapsed .dark-mode-content {
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Header */
+    .header {
+      left: 10%;
+      width: 80%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .header .logo h1 {
+      font-size: 1.5rem;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .header .socials i {
+      margin-left: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #4a4a4a;
+    }
+
+    .header .socials i:hover {
+      color: #6200ea;
+    }
+  </style>
+  <style>
+  /* Estilos para el header */
+  .header {
+    position: relative;  /* Permite que el header quede debajo del nav */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 5;  /* Asegura que el header no quede detrás del contenido */
+  }
+
+  /* Estilos para el nav */
+  #sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 256px; /* Ancho predeterminado del menú */
+    height: 100%; /* Hace que el sidebar ocupe toda la altura de la pantalla */
+    transition: width 0.3s ease;
+    background-color: #fff;
+    box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+    z-index: 10; /* El nav se muestra por encima del header */
+  }
+
+  /* El contenido del body o la sección principal */
+  body {
+    padding-left: 256px; /* Esto empuja el contenido para que no pase por debajo del nav */
+  }
+  @media (max-width: 500px) {
+
+.header{
+display: none;
+}
+}
+
+@media (max-width: 768px) {
+.header{
+display: none;
+}
+ 
+}
+
+
+
+
+
+}
+</style>
+
+</head>
+<body class="bg-gray-100">
+  <div class="flex flex-col">
+    <!-- Header -->
+
+    <header class="header">
+      <div class="logo flex items-center">
+        <div class="bg-indigo-600 text-white rounded-full p-2">
+          <span class="text-xl font-bold">CL</span>
+        </div>
+        <h1 style="color: black;" >Codinglab</h1>
+      </div>
+      <div class="socials flex items-center">
+        <i class="fab fa-facebook"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-linkedin"></i>
+      </div>
+    </header>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-white h-screen shadow-lg relative">
+      <!-- Search bar -->
+      <div class="px-6 py-4 search-bar">
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Search..."
+            class="w-full py-2 pl-10 pr-4 bg-gray-100 rounded-lg focus:outline-none"
+          />
+          <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+        </div>
+      </div>
+
+      <!-- Navigation menu -->
+      <nav class="px-6 py-4">
+        <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+          <i class="fas fa-home w-6 text-lg"></i>
+          <span class="ml-3 menu-text">inicio</span>
+        </a>
+       <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-users w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Usuarios</span>
+</a>
+
+       <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-building w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Inmuebles</span>
+</a>
+
+      <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-bullhorn w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Comunicados</span>
+</a>
+
+   <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-bell w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Alertas</span>
+</a>
+     <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-file-alt w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Documental</span>
+</a>
+          <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-blog w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Blog</span>
+</a>
+      <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-dollar-sign w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Contabilidad</span>
+</a>
+
+      </nav>
+
+      <!-- Footer -->
+      <div class="px-6 py-4 border-t">
+        <a href="#" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+          <i class="fas fa-sign-out-alt w-6 text-lg"></i>
+          <span class="ml-3 menu-text">Logout</span>
+        </a>
+        <div class="flex items-center py-3 dark-mode-content">
+          <!-- Default Moon Icon (for Light Mode) -->
+          <i class="fas fa-moon w-6 text-gray-600 moon-icon"></i>
+          <!-- Sun Icon for Dark Mode -->
+          <i class="fas fa-sun w-6 text-yellow-500 sun-icon hidden"></i>
+          <span id="darkModeText" class="ml-3 menu-text">Dark Mode</span>
+          <label class="ml-auto flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only" id="darkModeToggle" />
+            <div class="dark-mode-toggle">
+              <div class="dot"></div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Toggle Button -->
+      <div
+        id="toggle-button"
+        class="absolute top-2 right-2 bg-indigo-600 text-white rounded-full p-1 cursor-pointer"
+      >
+        <i class="fas fa-chevron-right"></i>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Selecciona el botón y el menú lateral
+    const toggleButton = document.getElementById("toggle-button");
+    const sidebar = document.getElementById("sidebar");
+
+    // Agrega el evento de clic para colapsar el menú
+    toggleButton.addEventListener("click", () => {
+      sidebar.classList.toggle("collapsed");
+    });
+
+    // Lógica del modo oscuro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const moonIcon = document.querySelector('.moon-icon');
+    const sunIcon = document.querySelector('.sun-icon');
+    const darkModeText = document.getElementById('darkModeText');
+
+    // Cargar el estado de modo oscuro si está en almacenamiento local
+    if (localStorage.getItem('darkMode') === 'true') {
+      body.classList.add('dark-mode');
+      moonIcon.classList.add('hidden');
+      sunIcon.classList.remove('hidden');
+      darkModeText.textContent = "Light Mode";
+      darkModeToggle.checked = true;
+    }
+
+    // Cambiar el modo oscuro al hacer clic en el interruptor
+    darkModeToggle.addEventListener('change', () => {
+      if (darkModeToggle.checked) {
+        body.classList.add('dark-mode');
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+        darkModeText.textContent = "Light Mode";
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        body.classList.remove('dark-mode');
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+        darkModeText.textContent = "Dark Mode";
+        localStorage.setItem('darkMode', 'false');
+      }
+    });
+  </script>
+</body>
+</html>
